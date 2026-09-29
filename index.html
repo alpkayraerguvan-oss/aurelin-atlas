@@ -1,0 +1,1780 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Aurelia aurita kaynaklı antimikrobiyal peptit aurelinin çözelti NMR yapısı (PDB 2LG4), fizikokimyasal profili ve membran seçiciliği — etkileşimli, üç dilli bir TÜBİTAK 2204-A proje sayfası.">
+<meta name="color-scheme" content="light dark">
+<meta name="author" content="TÜBİTAK 2204-A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aurelin Atlas">
+<meta property="og:description" content="Aurelia aurita kaynaklı antimikrobiyal peptit aurelinin çözelti NMR yapısı (PDB 2LG4), fizikokimyasal profili ve membran seçiciliği — etkileşimli, üç dilli bir TÜBİTAK 2204-A proje sayfası.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A6C70'/%3E%3Cpath d='M8 23c3-2 3-5 0-7s-3-5 0-7' stroke='%237EDED6' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M17 23c3-2 3-5 0-7s-3-5 0-7' stroke='%23EBC93F' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='24.5' cy='9.5' r='2.2' fill='%235AA9EC'/%3E%3C/svg%3E">
+<title>Aurelin Atlas</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,600;7..72,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Yerleşim: tek sütunlu bilimsel dergi omurgası; her bölümde koyu bir
+   "numune penceresi" (viewport) belge akışının içine gömülür. */
+:root{
+  --bg:#EFF3F2; --surface:#FBFDFC; --raise:#E4ECEA; --fg:#0B1A1D;
+  --muted:#516467; --faint:#7C8D90; --line:#D2DEDB; --line-2:#BECDC9;
+  --accent:#0A6C70; --accent-2:#08585B; --accent-soft:#D6EBE9;
+  /* numune penceresi her iki temada koyu kalır */
+  --stage:#071215; --stage-2:#0C1E22; --stage-fg:#DAE9E7;
+  --stage-muted:#7B9599; --stage-line:#1A2E33;
+  /* biyokimya kodları (her iki temada okunur) */
+  --cat:#2E86CE; --ani:#D24D45; --hyd:#C08A2E; --pol:#6E8589; --cys:#C9A215;
+  --ok:#2E7D5B; --on-accent:#FFFFFF;
+  --fD:'Literata',Georgia,'Times New Roman',serif;
+  --fB:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fM:'IBM Plex Mono',ui-monospace,'DejaVu Sans Mono','Courier New',monospace;
+  --r:10px; --rs:6px;
+  --maxw:1180px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#081315; --surface:#0D1E21; --raise:#132A2E; --fg:#DDEAE8;
+  --muted:#8AA1A4; --faint:#6C8386; --line:#1B3135; --line-2:#264247;
+  --accent:#57CFC6; --accent-2:#7EDED6; --accent-soft:#0F3033;
+  --cat:#5AA9EC; --ani:#EC7169; --hyd:#E0B054; --pol:#8DA5AA; --cys:#EBC93F;
+  --ok:#54C08D; --on-accent:#04191A; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#081315; --surface:#0D1E21; --raise:#132A2E; --fg:#DDEAE8;
+  --muted:#8AA1A4; --faint:#6C8386; --line:#1B3135; --line-2:#264247;
+  --accent:#57CFC6; --accent-2:#7EDED6; --accent-soft:#0F3033;
+  --cat:#5AA9EC; --ani:#EC7169; --hyd:#E0B054; --pol:#8DA5AA; --cys:#EBC93F;
+  --ok:#54C08D; --on-accent:#04191A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--fB);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--fD);font-weight:600;text-wrap:balance;margin:0;
+  letter-spacing:-.012em}
+a{color:var(--accent);text-underline-offset:3px}
+em{font-style:italic}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:20px}
+.mono{font-family:var(--fM);font-variant-numeric:tabular-nums}
+
+/* ---------------------------------------------------------------- başlık */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:16px;min-height:56px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:9px;margin-right:auto;min-width:0}
+.brand b{font-family:var(--fD);font-size:18px;font-weight:700;letter-spacing:.005em}
+.brand span{font-size:11px;color:var(--faint);font-family:var(--fM);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.sec{display:flex;gap:2px}
+nav.sec a{font-size:12.5px;color:var(--muted);text-decoration:none;
+  padding:5px 9px;border-radius:var(--rs)}
+nav.sec a:hover{color:var(--fg);background:var(--raise)}
+.langs{display:flex;border:1px solid var(--line-2);border-radius:var(--rs);overflow:hidden}
+.langs button{font:500 11.5px/1 var(--fM);letter-spacing:.06em;padding:7px 9px;
+  background:transparent;color:var(--muted);border:0;cursor:pointer}
+.langs button+button{border-left:1px solid var(--line-2)}
+.langs button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+/* ------------------------------------------------------------------ hero */
+.hero{padding-block:46px 30px;border-bottom:1px solid var(--line)}
+.kick{font:500 11px/1 var(--fM);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent)}
+.hero h1{font-size:clamp(34px,6.4vw,62px);line-height:1.02;margin:16px 0 0;
+  font-weight:700;letter-spacing:-.025em}
+.hero .lede{max-width:60ch;color:var(--muted);font-size:16.5px;margin:16px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  overflow:hidden}
+.fact{flex:1 1 150px;min-width:0;padding:13px 16px;border-right:1px solid var(--line)}
+.fact:last-child{border-right:0}
+.fact b{display:block;font-family:var(--fM);font-size:19px;font-weight:500;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fact span{display:block;font-size:11.5px;color:var(--faint);margin-top:2px}
+
+/* --------------------------------------------------------------- bölümler */
+section{padding-block:56px;border-bottom:1px solid var(--line)}
+.shead{max-width:62ch}
+.shead h2{font-size:clamp(24px,3.6vw,34px);margin:12px 0 0;line-height:1.14}
+.shead p{color:var(--muted);margin:14px 0 0}
+.grid{display:grid;gap:18px;margin-top:26px}
+@media(min-width:900px){.grid.v{grid-template-columns:minmax(0,1.58fr) minmax(0,1fr)}
+  .grid.h{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+/* --------------------------------------------------- koyu numune penceresi */
+.stage{background:var(--stage);border:1px solid var(--stage-line);
+  border-radius:var(--r);position:relative;overflow:hidden;color:var(--stage-fg)}
+.stage canvas{display:block;width:100%;touch-action:none}
+.stagebar{position:absolute;inset:auto 0 0 0;display:flex;gap:8px;
+  padding:9px 12px;font:400 11px/1 var(--fM);color:var(--stage-muted);
+  background:linear-gradient(transparent,rgba(4,12,14,.82));pointer-events:none}
+.tag{position:absolute;top:10px;left:12px;font:500 10px/1 var(--fM);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--stage-muted);
+  border:1px solid var(--stage-line);border-radius:100px;padding:5px 9px;
+  background:rgba(7,18,21,.6)}
+
+/* -------------------------------------------------------------- paneller */
+.panel{background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:16px}
+.panel h3{font-size:14px;font-family:var(--fB);font-weight:600;margin-bottom:2px}
+.psub{font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.ctl label.g{font:500 10.5px/1 var(--fM);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint)}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--rs);
+  overflow:hidden}
+.seg button{font:400 12px/1 var(--fB);padding:7px 10px;background:transparent;
+  color:var(--muted);border:0;cursor:pointer;white-space:nowrap}
+.seg button+button{border-left:1px solid var(--line-2)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;
+  color:var(--muted);cursor:pointer;user-select:none}
+.chk input{accent-color:var(--accent);width:15px;height:15px;margin:0}
+.btn{font:400 12px/1 var(--fB);padding:7px 12px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--muted);border-radius:var(--rs);cursor:pointer}
+.btn:hover{color:var(--fg);border-color:var(--accent)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,
+textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);
+  outline-offset:2px}
+
+/* ------------------------------------------------------------- dizi şeridi */
+.seqstrip{display:flex;flex-wrap:wrap;gap:2px;margin-top:4px}
+.aa{width:21px;height:26px;border-radius:3px;border:0;cursor:pointer;padding:0;
+  font:500 12px/1 var(--fM);color:#fff;position:relative;opacity:.92}
+.aa:hover{opacity:1;transform:translateY(-1px)}
+.aa[aria-pressed="true"]{outline:2px solid var(--fg);outline-offset:1px;opacity:1}
+.aa i{position:absolute;inset:auto 0 2px 0;font-size:7px;font-style:normal;
+  opacity:.7;font-family:var(--fM)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:12px;font-size:11.5px;
+  color:var(--muted)}
+.legend b{display:inline-block;width:9px;height:9px;border-radius:2px;
+  margin-right:5px;vertical-align:baseline}
+.readout{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;
+  min-height:96px}
+.rrow{display:flex;gap:10px;font-size:12.5px;padding:2px 0}
+.rrow dt{color:var(--faint);min-width:74px;flex:none}
+.rrow dd{margin:0;color:var(--fg)}
+.empty{color:var(--faint);font-size:12.5px;font-style:italic}
+
+/* ------------------------------------------------------------- hesaplayıcı */
+.seqin{width:100%;min-height:92px;resize:vertical;font:400 13px/1.7 var(--fM);
+  letter-spacing:.06em;padding:11px 12px;border:1px solid var(--line-2);
+  border-radius:var(--rs);background:var(--bg);color:var(--fg);word-break:break-all}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;margin-top:16px}
+.met{background:var(--surface);padding:11px 13px;min-width:0}
+.met span{display:block;font-size:10.5px;color:var(--faint);
+  letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.met b{display:block;font:500 17px/1.25 var(--fM);margin-top:3px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.met b u,.fact b u{font-size:10.5px;text-decoration:none;color:var(--faint);
+  margin-left:3px;font-weight:400}
+@media(min-width:560px){.metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.hint{font-size:11.5px;color:var(--faint);margin-top:12px;max-width:72ch}
+.warn{color:var(--ani);font-size:11.5px;margin-top:6px}
+
+/* -------------------------------------------------------------- seçicilik */
+.memgrid{display:grid;gap:14px;margin-top:22px}
+@media(min-width:820px){.memgrid{grid-template-columns:1fr 1fr}}
+.memcap{font-size:12.5px;color:var(--muted);margin-top:10px}
+.memhd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.memhd b{font-size:13.5px}
+.memhd span{font:400 11px/1 var(--fM);color:var(--faint)}
+
+/* ------------------------------------------------------------ yöntem akışı */
+.steps{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-top:24px;
+  scrollbar-width:thin}
+.step{flex:0 0 auto;border:1px solid var(--line-2);background:var(--surface);
+  border-radius:var(--rs);padding:9px 12px;cursor:pointer;text-align:left;
+  min-width:112px;color:var(--muted)}
+.step b{display:block;font:600 12.5px/1.3 var(--fB);color:var(--fg)}
+.step span{display:block;font:400 10.5px/1.3 var(--fM);color:var(--faint);margin-top:2px}
+.step[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.step[aria-pressed="true"] b{color:var(--accent-2)}
+.stepno{font:500 9.5px/1 var(--fM);letter-spacing:.1em;color:var(--faint);
+  display:block;margin-bottom:4px}
+.stagewrap{display:grid;gap:16px;margin-top:16px}
+@media(min-width:900px){.stagewrap{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}}
+.stepbody h3{font-size:19px;margin-bottom:8px}
+.stepbody p{color:var(--muted);font-size:14px;margin:0}
+.stepmeta{font:400 11px/1 var(--fM);color:var(--accent);margin-bottom:10px;
+  letter-spacing:.04em}
+
+/* ------------------------------------------------------------------- alt */
+footer{padding-block:40px 56px;color:var(--muted);font-size:13px}
+footer h3{font-size:14px;font-family:var(--fB);margin-bottom:10px}
+footer p{max-width:78ch;margin:0 0 14px}
+footer ol{max-width:78ch;padding-left:20px;margin:0;font-size:12.5px;line-height:1.75}
+footer li{margin-bottom:5px}
+.disc{border-left:2px solid var(--accent);padding-left:12px;font-size:12.5px;
+  color:var(--faint);margin-top:18px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;
+  transition-duration:.001ms!important}}
+</style>
+
+<style>
+html{-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%;height:auto}
+[hidden]{display:none!important}
+::selection{background:var(--accent);color:var(--on-accent)}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap topin">
+    <div class="brand"><b>Aurelin</b><span data-i18n="eyebrow"></span></div>
+    <nav class="sec">
+      <a href="#yapi" data-i18n="nav1"></a><a href="#profil" data-i18n="nav2"></a>
+      <a href="#secicilik" data-i18n="nav3"></a><a href="#yontem" data-i18n="nav4"></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <button data-lang="tr" aria-pressed="true">TR</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="el" aria-pressed="false">EL</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <p class="kick" data-i18n="eyebrow"></p>
+  <h1 data-i18n="title"></h1>
+  <p class="lede" data-i18n="lede"></p>
+  <div class="facts">
+    <div class="fact"><b id="fv1"></b><span data-i18n="f1l"></span></div>
+    <div class="fact"><b id="fv2"></b><span data-i18n="f2l"></span></div>
+    <div class="fact"><b id="fv3"></b><span data-i18n="f3l"></span></div>
+    <div class="fact"><b id="fv4"></b><span data-i18n="f4l"></span></div>
+    <div class="fact"><b id="fv5"></b><span data-i18n="f5l"></span></div>
+    <div class="fact"><b id="fv6"></b><span data-i18n="f6l"></span></div>
+  </div>
+</div>
+
+<!-- ============================================================== 1. YAPI -->
+<section id="yapi"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s1kick"></p>
+    <h2 data-i18n="s1h"></h2>
+    <p data-i18n="s1p"></p>
+  </div>
+
+  <div class="grid v">
+    <div class="stage" id="molStage">
+      <span class="tag">PDB 2LG4 · NMR</span>
+      <canvas id="mol" height="460"></canvas>
+      <div class="stagebar"><span data-i18n="viewHint"></span></div>
+    </div>
+
+    <div class="panel">
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="g" data-i18n="lblRep"></label>
+        <div class="seg" id="repSeg">
+          <button data-v="tube" aria-pressed="true" data-i18n="repTube"></button>
+          <button data-v="stick" aria-pressed="false" data-i18n="repStick"></button>
+          <button data-v="ens" aria-pressed="false" data-i18n="repEns"></button>
+        </div>
+      </div>
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="g" data-i18n="lblCol"></label>
+        <div class="seg" id="colSeg">
+          <button data-v="prop" aria-pressed="true" data-i18n="colProp"></button>
+          <button data-v="ss" aria-pressed="false" data-i18n="colSS"></button>
+          <button data-v="rain" aria-pressed="false" data-i18n="colRain"></button>
+        </div>
+      </div>
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="chk"><input type="checkbox" id="tgSS" checked><span data-i18n="tgSS"></span></label>
+        <label class="chk"><input type="checkbox" id="tgIf" checked><span data-i18n="tgIf"></span></label>
+        <label class="chk"><input type="checkbox" id="tgSpin" checked><span data-i18n="tgSpin"></span></label>
+        <button class="btn" id="btnReset" data-i18n="reset"></button>
+      </div>
+
+      <h3 data-i18n="seqLabel" style="margin-top:16px"></h3>
+      <div class="seqstrip" id="seqStrip"></div>
+      <div class="legend">
+        <span><b style="background:var(--cat)"></b><span data-i18n="legCat"></span></span>
+        <span><b style="background:var(--ani)"></b><span data-i18n="legAni"></span></span>
+        <span><b style="background:var(--hyd)"></b><span data-i18n="legHyd"></span></span>
+        <span><b style="background:var(--pol)"></b><span data-i18n="legPol"></span></span>
+        <span><b style="background:var(--cys)"></b><span data-i18n="legCys"></span></span>
+      </div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </div>
+  <p class="hint" data-i18n="prov"></p>
+</div></section>
+
+<!-- ============================================================ 2. PROFİL -->
+<section id="profil"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s2kick"></p>
+    <h2 data-i18n="s2h"></h2>
+    <p data-i18n="s2p"></p>
+  </div>
+
+  <div class="panel" style="margin-top:26px">
+    <h3 data-i18n="seqInLabel"></h3>
+    <textarea class="seqin mono" id="seqIn" spellcheck="false" autocapitalize="characters"></textarea>
+    <div class="ctl" style="margin-top:12px">
+      <label class="g" data-i18n="presets"></label>
+      <div class="seg" id="preSeg">
+        <button data-p="aurelin" aria-pressed="true">Aurelin</button>
+        <button data-p="magainin" aria-pressed="false">Magainin 2</button>
+        <button data-p="melittin" aria-pressed="false">Melittin</button>
+        <button data-p="ll37" aria-pressed="false">LL-37</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="tgBridge" checked>
+        <span data-i18n="ssToggle"></span></label>
+      <span class="mono" style="font-size:11px;color:var(--faint)" data-i18n="ssHint"></span>
+    </div>
+    <p class="warn" id="seqWarn" hidden></p>
+    <div class="metrics" id="metrics"></div>
+  </div>
+
+  <div class="grid h">
+    <div class="panel">
+      <h3 data-i18n="wheelH"></h3>
+      <p class="psub" data-i18n="wheelSub"></p>
+      <div class="ctl" style="margin-bottom:12px">
+        <label class="g" data-i18n="wheelWin"></label>
+        <div class="seg" id="winSeg">
+          <button data-w="all" aria-pressed="true" data-i18n="wWhole"></button>
+          <button data-w="h1" aria-pressed="false" data-i18n="wH1"></button>
+          <button data-w="h2" aria-pressed="false" data-i18n="wH2"></button>
+        </div>
+      </div>
+      <canvas id="wheel" height="330"></canvas>
+    </div>
+    <div class="panel">
+      <h3 data-i18n="chargeH"></h3>
+      <p class="psub" data-i18n="chargeSub"></p>
+      <canvas id="curve" height="330"></canvas>
+    </div>
+  </div>
+  <p class="hint" data-i18n="calcNote"></p>
+</div></section>
+
+<!-- ========================================================= 3. SEÇİCİLİK -->
+<section id="secicilik"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s3kick"></p>
+    <h2 data-i18n="s3h"></h2>
+    <p data-i18n="s3p"></p>
+  </div>
+
+  <div class="ctl" style="margin-top:22px">
+    <button class="btn" id="memToggle" data-i18n="pause"></button>
+    <span class="mono" style="font-size:11px;color:var(--faint)" data-i18n="schematic"></span>
+  </div>
+
+  <div class="memgrid">
+    <div>
+      <div class="memhd"><b data-i18n="memA"></b><span data-i18n="memAsub"></span></div>
+      <div class="stage"><canvas id="memA" height="300"></canvas></div>
+      <p class="memcap" data-i18n="capA"></p>
+    </div>
+    <div>
+      <div class="memhd"><b data-i18n="memB"></b><span data-i18n="memBsub"></span></div>
+      <div class="stage"><canvas id="memB" height="300"></canvas></div>
+      <p class="memcap" data-i18n="capB"></p>
+    </div>
+  </div>
+  <p class="hint" data-i18n="memNote"></p>
+</div></section>
+
+<!-- ============================================================ 4. YÖNTEM -->
+<section id="yontem"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s4kick"></p>
+    <h2 data-i18n="s4h"></h2>
+    <p data-i18n="s4p"></p>
+  </div>
+
+  <div class="steps" id="steps" role="group"></div>
+
+  <div class="stagewrap">
+    <div class="stage"><canvas id="flow" height="330"></canvas></div>
+    <div class="panel stepbody">
+      <p class="stepmeta" id="stepMeta"></p>
+      <h3 id="stepTitle"></h3>
+      <p id="stepDesc"></p>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <h3 data-i18n="ftTitle"></h3>
+  <p data-i18n="ftBody"></p>
+  <h3 data-i18n="ftSrc"></h3>
+  <ol>
+    <li>Shenkarev, Z. O., Panteleev, P. V., Balandin, S. V., Gizatullina, A. K., Altukhov, D. A., Finkina, E. I., Kokryakov, V. N., Arseniev, A. S., &amp; Ovchinnikova, T. V. (2012). Recombinant expression and solution structure of antimicrobial peptide aurelin from jellyfish <em>Aurelia aurita</em>. <em>Biochemical and Biophysical Research Communications, 429</em>(1–2), 63–69. <a href="https://doi.org/10.1016/j.bbrc.2012.10.092" target="_blank" rel="noopener">doi:10.1016/j.bbrc.2012.10.092</a> — PDB <a href="https://www.rcsb.org/structure/2LG4" target="_blank" rel="noopener">2LG4</a></li>
+    <li>Ovchinnikova, T. V., Balandin, S. V., Aleshina, G. M., Tagaev, A. A., Leonova, Y. F., Krasnodembsky, E. D., Men'shenin, A. V., &amp; Kokryakov, V. N. (2006). Aurelin, a novel antimicrobial peptide from jellyfish <em>Aurelia aurita</em> with structural features of defensins and channel-blocking toxins. <em>Biochemical and Biophysical Research Communications, 348</em>(2), 514–523. <a href="https://doi.org/10.1016/j.bbrc.2006.07.078" target="_blank" rel="noopener">doi:10.1016/j.bbrc.2006.07.078</a></li>
+    <li>UniProt Consortium. Aurelin — <a href="https://www.uniprot.org/uniprotkb/Q0MWV8/entry" target="_blank" rel="noopener">Q0MWV8</a> (Swiss-Prot, reviewed).</li>
+    <li>Gasteiger, E., Hoogland, C., Gattiker, A., Duvaud, S., Wilkins, M. R., Appel, R. D., &amp; Bairoch, A. (2005). Protein identification and analysis tools on the ExPASy server. In <em>The Proteomics Protocols Handbook</em> (pp. 571–607). Humana Press.</li>
+    <li>Fauchère, J.-L., &amp; Pliška, V. (1983). Hydrophobic parameters π of amino-acid side chains. <em>European Journal of Medicinal Chemistry, 18</em>, 369–375. · Eisenberg, D., Weiss, R. M., &amp; Terwilliger, T. C. (1982). The helical hydrophobic moment. <em>Nature, 299</em>, 371–374.</li>
+    <li>Bjellqvist, B., Hughes, G. J., Pasquali, C., Paquet, N., Ravier, F., Sanchez, J.-C., Frutiger, S., &amp; Hochstrasser, D. (1993). The focusing positions of polypeptides in immobilized pH gradients. <em>Electrophoresis, 14</em>(1), 1023–1031.</li>
+    <li>Kyte, J., &amp; Doolittle, R. F. (1982). A simple method for displaying the hydropathic character of a protein. <em>Journal of Molecular Biology, 157</em>(1), 105–132. · Ikai, A. (1980). Thermostability and aliphatic index of globular proteins. <em>Journal of Biochemistry, 88</em>(6), 1895–1898. · Boman, H. G. (2003). Antibacterial peptides: basic facts and emerging concepts. <em>Journal of Internal Medicine, 254</em>(3), 197–215.</li>
+  </ol>
+  <p class="disc" data-i18n="ftDisc"></p>
+</div></footer>
+
+<script>
+/* Aurelin Atlas — veriler: RCSB PDB 2LG4 (Shenkarev ve ark., 2012),
+   UniProt Q0MWV8. Hesap ölçekleri kaynakçada listelenmiştir. */
+const AURELIN = {"pdb":"2LG4","seq":"AACSDRAHGHICESFKSFCKDSGRNGVKLRANCKKTCGLC","nModels":20,"radius":17.28,"names":["N","CA","C","O","CB","N","CA","C","O","CB","N","CA","C","O","CB","SG","N","CA","C","O","CB","OG","N","CA","C","O","CB","CG","OD1","OD2","N","CA","C","O","CB","CG","CD","NE","CZ","NH1","NH2","N","CA","C","O","CB","N","CA","C","O","CB","CG","ND1","CD2","CE1","NE2","N","CA","C","O","N","CA","C","O","CB","CG","ND1","CD2","CE1","NE2","N","CA","C","O","CB","CG1","CG2","CD1","N","CA","C","O","CB","SG","N","CA","C","O","CB","CG","CD","OE1","OE2","N","CA","C","O","CB","OG","N","CA","C","O","CB","CG","CD1","CD2","CE1","CE2","CZ","N","CA","C","O","CB","CG","CD","CE","NZ","N","CA","C","O","CB","OG","N","CA","C","O","CB","CG","CD1","CD2","CE1","CE2","CZ","N","CA","C","O","CB","SG","N","CA","C","O","CB","CG","CD","CE","NZ","N","CA","C","O","CB","CG","OD1","OD2","N","CA","C","O","CB","OG","N","CA","C","O","N","CA","C","O","CB","CG","CD","NE","CZ","NH1","NH2","N","CA","C","O","CB","CG","OD1","ND2","N","CA","C","O","N","CA","C","O","CB","CG1","CG2","N","CA","C","O","CB","CG","CD","CE","NZ","N","CA","C","O","CB","CG","CD1","CD2","N","CA","C","O","CB","CG","CD","NE","CZ","NH1","NH2","N","CA","C","O","CB","N","CA","C","O","CB","CG","OD1","ND2","N","CA","C","O","CB","SG","N","CA","C","O","CB","CG","CD","CE","NZ","N","CA","C","O","CB","CG","CD","CE","NZ","N","CA","C","O","CB","OG1","CG2","N","CA","C","O","CB","SG","N","CA","C","O","N","CA","C","O","CB","CG","CD1","CD2","N","CA","C","O","CB","SG"],"resi":[1,1,1,1,1,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,9,9,9,9,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,14,14,14,14,14,14,15,15,15,15,15,15,15,15,15,15,15,16,16,16,16,16,16,16,16,16,17,17,17,17,17,17,18,18,18,18,18,18,18,18,18,18,18,19,19,19,19,19,19,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,21,21,22,22,22,22,22,22,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,26,26,26,26,27,27,27,27,27,27,27,28,28,28,28,28,28,28,28,28,29,29,29,29,29,29,29,29,30,30,30,30,30,30,30,30,30,30,30,31,31,31,31,31,32,32,32,32,32,32,32,32,33,33,33,33,33,33,34,34,34,34,34,34,34,34,34,35,35,35,35,35,35,35,35,35,36,36,36,36,36,36,36,37,37,37,37,37,37,38,38,38,38,39,39,39,39,39,39,39,39,40,40,40,40,40,40],"elem":["N","C","C","O","C","N","C","C","O","C","N","C","C","O","C","S","N","C","C","O","C","O","N","C","C","O","C","C","O","O","N","C","C","O","C","C","C","N","C","N","N","N","C","C","O","C","N","C","C","O","C","C","N","C","C","N","N","C","C","O","N","C","C","O","C","C","N","C","C","N","N","C","C","O","C","C","C","C","N","C","C","O","C","S","N","C","C","O","C","C","C","O","O","N","C","C","O","C","O","N","C","C","O","C","C","C","C","C","C","C","N","C","C","O","C","C","C","C","N","N","C","C","O","C","O","N","C","C","O","C","C","C","C","C","C","C","N","C","C","O","C","S","N","C","C","O","C","C","C","C","N","N","C","C","O","C","C","O","O","N","C","C","O","C","O","N","C","C","O","N","C","C","O","C","C","C","N","C","N","N","N","C","C","O","C","C","O","N","N","C","C","O","N","C","C","O","C","C","C","N","C","C","O","C","C","C","C","N","N","C","C","O","C","C","C","C","N","C","C","O","C","C","C","N","C","N","N","N","C","C","O","C","N","C","C","O","C","C","O","N","N","C","C","O","C","S","N","C","C","O","C","C","C","C","N","N","C","C","O","C","C","C","C","N","N","C","C","O","C","O","C","N","C","C","O","C","S","N","C","C","O","N","C","C","O","C","C","C","C","N","C","C","O","C","S"],"xyz":[10.3,13.5,-3.17,9.72,12.23,-2.78,9.1,11.52,-3.98,7.99,11.84,-4.4,8.68,12.44,-1.69,9.83,10.54,-4.52,9.35,9.79,-5.67,8.24,8.82,-5.27,8.08,8.49,-4.09,10.5,9.03,-6.32,7.47,8.37,-6.25,6.37,7.44,-6.0,6.71,6.04,-6.51,7.16,5.88,-7.65,5.09,7.94,-6.67,3.7,6.76,-6.6,6.5,5.04,-5.66,6.79,3.66,-6.02,6.46,2.72,-4.87,5.96,3.14,-3.83,8.26,3.51,-6.41,9.08,4.39,-5.67,6.73,1.43,-5.07,6.46,0.43,-4.05,7.74,0.06,-3.3,8.77,-0.22,-3.91,5.85,-0.82,-4.68,4.96,-0.5,-5.86,3.75,-0.28,-5.65,5.48,-0.46,-7.0,7.67,0.08,-1.97,8.82,-0.25,-1.14,8.57,-1.53,-0.35,9.51,-2.22,0.05,9.12,0.9,-0.18,7.89,1.68,0.25,7.57,2.8,-0.74,8.28,4.03,-0.42,8.44,5.03,-1.28,7.93,4.94,-2.51,9.1,6.12,-0.92,7.3,-1.84,-0.12,6.92,-3.04,0.62,7.6,-4.28,0.04,8.25,-4.21,-1.0,5.41,-3.21,0.62,7.44,-5.41,0.72,8.03,-6.66,0.28,7.64,-6.97,-1.16,8.35,-7.66,-1.88,7.61,-7.81,1.19,8.53,-8.04,2.35,8.51,-7.26,3.49,9.51,-8.95,2.53,9.44,-7.69,4.33,10.06,-8.72,3.77,6.49,-6.45,-1.58,6.01,-6.67,-2.93,4.66,-7.35,-2.96,3.72,-6.85,-3.58,4.55,-8.5,-2.3,3.3,-9.25,-2.26,2.34,-8.65,-1.23,1.21,-9.11,-1.08,3.57,-10.71,-1.91,4.24,-11.47,-3.02,3.78,-12.69,-3.49,5.35,-11.18,-3.75,4.57,-13.11,-4.46,5.53,-12.22,-4.64,2.8,-7.61,-0.54,1.99,-6.95,0.47,1.02,-5.96,-0.17,-0.14,-5.86,0.22,2.86,-6.2,1.5,3.82,-7.17,2.18,1.98,-5.5,2.52,3.24,-7.81,3.43,1.5,-5.22,-1.17,0.68,-4.24,-1.87,-0.42,-4.93,-2.67,-1.58,-4.53,-2.61,1.55,-3.4,-2.8,3.09,-2.79,-2.04,-0.05,-5.97,-3.41,-1.01,-6.71,-4.22,-2.02,-7.45,-3.34,-3.23,-7.34,-3.54,-0.28,-7.71,-5.12,0.08,-7.15,-6.49,-0.84,-7.66,-7.59,-2.07,-7.69,-7.37,-0.32,-8.02,-8.67,-1.5,-8.19,-2.36,-2.36,-8.94,-1.45,-3.31,-8.01,-0.71,-4.39,-8.43,-0.27,-1.5,-9.72,-0.44,-0.79,-10.76,-1.08,-2.92,-6.75,-0.57,-3.74,-5.76,0.12,-3.99,-4.55,-0.77,-4.0,-3.41,-0.3,-3.07,-5.33,1.42,-3.05,-6.4,2.47,-2.02,-7.33,2.51,-4.05,-6.47,3.42,-2.0,-8.31,3.48,-4.04,-7.46,4.39,-3.01,-8.38,4.42,-4.2,-4.8,-2.06,-4.45,-3.73,-3.02,-5.8,-3.08,-2.76,-5.92,-1.85,-2.77,-4.4,-4.27,-4.45,-5.35,-3.57,-5.4,-5.03,-2.09,-5.51,-4.56,-1.72,-6.91,-5.68,-1.72,-7.89,-6.82,-3.9,-2.53,-8.16,-3.4,-2.27,-8.28,-2.86,-0.85,-9.31,-2.32,-0.46,-9.19,-4.51,-2.49,-10.48,-4.11,-2.06,-7.21,-3.0,-0.08,-7.18,-2.53,1.3,-6.58,-1.13,1.38,-6.54,-0.52,2.45,-6.39,-3.49,2.18,-7.04,-4.84,2.33,-7.07,-5.73,1.26,-7.62,-5.22,3.53,-7.66,-6.97,1.39,-8.22,-6.46,3.66,-8.24,-7.34,2.59,-6.1,-0.63,0.25,-5.49,0.69,0.19,-6.48,1.76,0.64,-6.09,2.84,1.08,-5.0,0.99,-1.22,-3.28,0.47,-1.54,-7.77,1.46,0.52,-8.81,2.39,0.91,-9.29,2.12,2.33,-10.39,2.52,2.71,-9.99,2.3,-0.07,-10.51,0.89,-0.27,-11.97,0.77,0.13,-12.13,0.37,1.59,-12.95,-0.86,1.74,-8.46,1.43,3.1,-8.8,1.1,4.48,-8.55,2.29,5.4,-7.49,2.92,5.35,-7.98,-0.1,4.96,-8.41,-0.59,6.33,-9.6,-0.44,6.66,-7.55,-1.12,7.06,-9.53,2.59,6.25,-9.42,3.71,7.18,-8.6,3.32,8.4,-8.38,4.14,9.3,-10.81,4.19,7.6,-11.63,3.09,7.97,-8.16,2.07,8.44,-7.37,1.59,9.56,-5.88,1.64,9.28,-5.45,2.13,8.24,-5.09,1.14,10.23,-3.64,1.13,10.08,-3.22,0.43,8.79,-2.32,0.88,8.09,-2.99,0.45,11.28,-3.44,-0.99,11.48,-3.3,-1.43,12.93,-2.28,-2.46,13.1,-1.88,-2.91,14.28,-2.41,-2.42,15.39,-0.95,-3.85,14.35,-3.9,-0.68,8.49,-3.6,-1.45,7.28,-3.57,-0.54,6.05,-2.72,-0.68,5.18,-4.63,-2.56,7.1,-4.22,-3.85,7.77,-3.65,-4.74,7.14,-4.5,-3.96,9.06,-4.53,0.38,5.99,-4.6,1.3,4.86,-3.45,2.29,4.85,-2.83,2.51,3.81,-3.17,2.89,6.0,-2.09,3.86,6.11,-0.75,3.25,5.69,0.0,3.85,4.92,-1.96,4.39,7.55,-0.93,5.51,7.62,-3.31,4.87,8.06,-0.47,2.05,6.19,0.77,1.36,5.87,0.82,1.01,4.38,1.9,0.93,3.79,0.91,0.09,6.71,1.1,0.36,8.19,2.41,1.09,8.46,2.65,1.28,9.95,3.72,2.28,10.21,-0.34,0.79,3.79,-0.43,0.45,2.37,-0.04,1.64,1.5,0.73,1.49,0.55,-1.85,-0.01,2.03,-2.17,-1.47,2.32,-3.67,-1.72,2.23,-1.43,-2.39,1.36,-0.57,2.81,1.83,-0.28,4.02,1.07,1.17,4.46,1.29,1.71,5.26,0.53,-1.23,5.15,1.48,-2.69,4.85,1.17,-3.39,6.08,0.62,-4.41,6.59,1.54,-5.41,7.37,1.16,-5.54,7.73,-0.11,-6.3,7.8,2.06,1.79,3.93,2.34,3.17,4.26,2.66,4.14,3.28,2.0,5.06,3.68,1.29,3.38,4.28,4.17,3.92,1.99,2.24,4.77,0.96,1.68,4.43,0.71,0.21,5.18,0.05,-0.51,4.63,-0.35,2.47,4.99,-0.18,3.93,6.11,0.22,4.26,4.04,-0.47,4.81,3.3,1.25,-0.23,2.86,1.09,-1.61,2.25,2.39,-2.13,1.07,2.43,-2.5,1.84,-0.04,-1.71,2.22,-1.49,-0.67,3.06,3.44,-2.17,2.6,4.74,-2.65,2.13,4.65,-4.1,1.39,5.5,-4.59,3.72,5.77,-2.53,4.41,5.76,-1.18,4.71,7.17,-0.7,6.2,7.47,-0.75,6.47,8.92,-0.99,2.57,3.6,-4.79,2.19,3.39,-6.19,0.95,2.51,-6.29,-0.05,2.9,-6.89,3.35,2.75,-6.96,3.01,2.41,-8.4,3.36,0.97,-8.73,2.23,0.28,-9.48,2.64,-1.05,-10.01,1.03,1.31,-5.71,-0.09,0.38,-5.74,-1.38,1.05,-5.27,-2.47,0.68,-5.71,0.19,-0.85,-4.85,1.48,-1.39,-5.14,-0.88,-1.92,-5.06,-1.25,2.03,-4.39,-2.4,2.75,-3.87,-2.77,3.92,-4.77,-3.93,4.31,-4.87,-2.12,3.25,-2.45,-2.04,1.93,-1.2,-1.76,4.48,-5.44,-1.99,5.61,-6.33,-1.79,6.94,-5.64,-2.75,7.6,-5.24,-0.53,7.35,-5.5,-0.21,8.61,-4.85,0.83,9.39,-5.67,1.32,10.43,-5.23,0.33,8.37,-3.44,-0.67,7.78,-2.44,0.03,6.87,-1.45,-1.41,8.9,-1.71,1.14,8.88,-6.85,2.11,9.53,-7.73,1.56,10.84,-8.28,1.97,11.3,-9.34,2.49,8.59,-8.88,2.86,6.89,-8.36],"ens":[[9.7,12.2,-2.8,9.3,9.8,-5.7,6.4,7.4,-6.0,6.8,3.7,-6.0,6.5,0.4,-4.0,8.8,-0.3,-1.1,6.9,-3.0,0.6,8.0,-6.7,0.3,6.0,-6.7,-2.9,3.3,-9.2,-2.3,2.0,-6.9,0.5,0.7,-4.2,-1.9,-1.0,-6.7,-4.2,-2.4,-8.9,-1.4,-3.7,-5.8,0.1,-4.4,-3.7,-3.0,-8.2,-3.4,-2.3,-7.2,-2.5,1.3,-5.5,0.7,0.2,-8.8,2.4,0.9,-8.8,1.1,4.5,-9.4,3.7,7.2,-7.4,1.6,9.6,-3.6,1.1,10.1,-3.6,-1.4,7.3,-4.6,1.3,4.9,-2.1,3.9,6.1,0.8,1.4,5.9,-0.4,0.4,2.4,-0.3,4.0,1.1,3.2,4.3,2.7,4.8,1.0,1.7,2.9,1.1,-1.6,2.6,4.7,-2.7,2.2,3.4,-6.2,-0.1,0.4,-5.7,-2.4,2.7,-3.9,-2.0,5.6,-6.3,-0.2,8.6,-4.9,2.1,9.5,-7.7],[9.3,12.9,-4.0,10.1,9.4,-5.4,6.7,7.7,-5.5,6.7,3.9,-5.9,6.4,0.5,-4.1,8.8,-0.2,-1.3,7.0,-3.1,0.5,8.2,-6.7,-0.0,6.0,-6.7,-3.1,3.3,-9.2,-2.7,2.2,-7.2,0.4,0.8,-4.4,-1.7,-0.9,-6.8,-4.1,-2.2,-9.1,-1.4,-3.8,-6.2,0.3,-4.2,-3.8,-2.6,-8.0,-3.5,-2.1,-7.2,-2.4,1.5,-5.3,0.7,0.3,-8.4,2.7,1.1,-8.9,1.0,4.4,-9.8,3.4,7.2,-7.3,1.7,9.5,-3.6,1.0,10.3,-3.5,-1.5,7.4,-4.6,1.2,5.0,-2.1,3.8,6.2,0.8,1.3,6.1,-0.4,0.3,2.6,-0.2,3.8,1.2,3.2,4.1,2.8,4.8,0.8,1.7,2.8,0.9,-1.5,2.6,4.5,-2.6,2.1,3.1,-6.1,-0.2,0.2,-5.5,-2.5,2.7,-3.8,-1.8,5.5,-6.2,-0.3,8.6,-4.5,1.9,9.9,-7.2],[10.6,11.5,-2.2,9.6,9.8,-5.4,6.5,7.6,-5.7,6.6,3.8,-6.0,6.4,0.5,-4.1,8.8,-0.2,-1.3,7.0,-3.0,0.5,8.1,-6.6,0.1,6.0,-6.6,-3.0,3.3,-9.2,-2.5,2.2,-7.2,0.5,0.7,-4.4,-1.7,-1.0,-6.8,-4.1,-2.2,-9.1,-1.3,-3.9,-6.1,0.3,-4.3,-3.8,-2.7,-8.0,-3.5,-2.2,-7.3,-2.4,1.4,-5.4,0.7,0.2,-8.5,2.7,1.1,-8.6,1.3,4.6,-9.0,3.7,7.6,-7.0,1.4,9.8,-3.3,1.0,10.1,-3.4,-1.6,7.3,-4.6,1.1,4.9,-2.1,3.7,6.0,0.8,1.3,5.8,-0.4,0.3,2.3,-0.4,3.9,1.0,3.1,4.2,2.5,4.8,0.9,1.6,2.8,0.9,-1.6,2.4,4.5,-2.8,2.0,3.0,-6.3,-0.3,0.1,-5.7,-2.6,2.6,-4.0,-1.9,5.4,-6.5,-0.5,8.5,-4.8,1.9,9.7,-7.6],[10.9,10.6,-1.8,9.6,9.7,-5.2,6.3,7.7,-5.7,6.6,4.0,-6.0,6.4,0.6,-4.2,8.9,-0.1,-1.4,7.1,-3.0,0.4,8.2,-6.6,-0.2,6.1,-6.4,-3.3,3.5,-9.1,-2.8,2.2,-7.1,0.2,0.9,-4.4,-2.0,-1.0,-6.8,-4.3,-2.0,-9.1,-1.5,-3.8,-6.2,0.2,-4.2,-3.8,-2.7,-8.0,-3.6,-2.2,-7.2,-2.4,1.4,-5.4,0.7,0.1,-8.4,2.7,1.1,-8.6,1.2,4.6,-9.0,3.6,7.5,-7.0,1.3,9.8,-3.3,0.9,10.0,-3.5,-1.6,7.2,-4.6,1.1,4.8,-2.2,3.7,5.9,0.8,1.3,5.8,-0.4,0.3,2.3,-0.4,3.8,0.9,3.1,4.2,2.5,4.8,1.0,1.5,2.9,0.9,-1.7,2.4,4.5,-2.9,2.0,3.1,-6.4,-0.2,0.1,-5.9,-2.6,2.5,-4.1,-2.0,5.4,-6.5,-0.6,8.5,-4.8,1.7,9.8,-7.6],[9.3,13.1,-3.5,9.8,9.8,-5.2,6.7,7.6,-5.6,6.8,3.8,-5.9,6.4,0.4,-4.1,8.8,-0.3,-1.3,7.0,-3.1,0.5,8.1,-6.8,0.1,6.1,-6.8,-3.1,3.2,-9.2,-2.7,2.1,-7.2,0.3,0.8,-4.4,-1.9,-0.9,-6.7,-4.4,-2.3,-9.0,-1.6,-3.9,-6.1,0.1,-4.2,-3.7,-2.9,-7.9,-3.3,-2.4,-7.2,-2.3,1.2,-5.4,0.8,0.1,-8.6,2.7,0.9,-8.9,1.0,4.3,-9.5,3.5,7.2,-7.1,1.6,9.4,-3.4,0.8,10.1,-3.5,-1.6,7.2,-4.5,1.2,4.8,-2.0,3.7,6.1,0.9,1.2,5.8,-0.4,0.3,2.3,-0.2,3.9,1.0,3.2,4.1,2.6,4.8,0.8,1.6,2.9,0.9,-1.6,2.6,4.5,-2.7,2.2,3.1,-6.2,-0.2,0.2,-5.7,-2.4,2.8,-4.0,-1.7,5.6,-6.4,-0.2,8.6,-4.7,2.1,9.8,-7.4],[10.8,11.5,-2.4,9.7,9.7,-5.6,6.5,7.7,-5.8,6.7,3.9,-6.0,6.5,0.6,-4.2,8.9,-0.0,-1.3,7.1,-2.8,0.6,8.2,-6.4,0.2,6.2,-6.5,-3.0,3.6,-9.2,-2.3,2.3,-7.1,0.5,0.9,-4.3,-1.7,-0.9,-6.8,-4.0,-2.0,-9.1,-1.1,-3.8,-6.0,0.4,-4.1,-3.8,-2.6,-7.9,-3.5,-2.1,-7.2,-2.3,1.4,-5.3,0.8,0.1,-8.5,2.8,0.9,-9.0,1.1,4.3,-9.5,3.5,7.2,-7.0,1.7,9.4,-3.3,1.1,10.1,-3.4,-1.4,7.2,-4.5,1.3,4.8,-2.0,4.0,5.9,0.9,1.5,5.8,-0.3,0.5,2.3,-0.3,4.0,0.9,3.1,4.4,2.4,4.8,1.1,1.6,2.9,1.0,-1.7,2.5,4.6,-2.9,2.2,3.0,-6.4,-0.2,0.1,-5.7,-2.5,2.6,-4.1,-1.9,5.4,-6.6,-0.5,8.5,-5.0,1.8,9.7,-7.8],[9.5,12.4,-2.8,9.9,9.4,-5.1,6.6,7.6,-5.4,6.6,3.8,-5.8,6.3,0.4,-4.2,8.8,-0.4,-1.4,6.9,-3.2,0.4,8.0,-6.8,-0.1,6.0,-6.7,-3.3,3.1,-9.2,-2.9,2.1,-7.2,0.2,0.7,-4.4,-2.0,-1.0,-6.7,-4.5,-2.3,-9.1,-1.8,-4.1,-6.2,-0.1,-4.2,-3.6,-2.9,-8.0,-3.2,-2.4,-7.3,-2.4,1.2,-5.4,0.8,0.2,-8.6,2.7,1.1,-8.9,0.9,4.4,-9.5,3.3,7.4,-6.9,1.4,9.5,-3.3,0.5,10.1,-3.4,-1.9,7.2,-4.5,0.9,4.9,-2.0,3.5,6.2,0.9,1.0,5.8,-0.4,0.2,2.3,-0.3,3.8,1.1,3.2,4.1,2.6,4.8,0.8,1.6,2.8,0.9,-1.6,2.5,4.5,-2.7,2.0,3.1,-6.2,-0.4,0.2,-5.7,-2.6,2.8,-3.9,-1.9,5.7,-6.3,-0.3,8.6,-4.5,2.0,9.9,-7.3],[7.7,13.3,-5.0,9.4,9.9,-5.6,6.3,7.7,-5.9,6.8,3.9,-6.0,6.6,0.6,-4.1,9.0,-0.1,-1.2,7.2,-3.0,0.5,8.3,-6.6,-0.1,6.3,-6.4,-3.3,3.5,-9.0,-2.9,2.4,-7.2,0.2,1.0,-4.2,-1.8,-0.8,-6.5,-4.3,-1.9,-8.9,-1.6,-3.6,-6.0,0.1,-4.0,-3.5,-2.7,-7.8,-3.3,-2.3,-7.1,-2.4,1.4,-5.4,0.8,0.3,-8.6,2.7,0.9,-9.1,1.1,4.4,-9.5,3.6,7.2,-7.1,1.7,9.4,-3.5,0.8,10.2,-3.6,-1.6,7.2,-4.5,1.3,4.9,-2.0,3.8,6.2,0.8,1.2,6.1,-0.3,0.4,2.6,-0.0,4.0,1.3,3.4,4.1,2.9,5.0,0.9,1.8,3.0,1.1,-1.5,2.7,4.8,-2.4,2.3,3.5,-6.0,0.1,0.5,-5.6,-2.3,2.8,-3.7,-2.0,5.7,-6.1,-0.2,8.7,-4.6,2.0,9.7,-7.6],[8.8,13.0,-3.7,9.4,9.8,-5.7,6.3,7.5,-6.0,6.8,3.8,-6.0,6.5,0.5,-4.0,8.9,-0.1,-1.1,7.1,-2.9,0.7,8.1,-6.5,0.2,6.2,-6.3,-3.0,3.5,-9.0,-2.6,2.1,-7.1,0.3,0.9,-4.2,-1.8,-0.9,-6.5,-4.2,-2.0,-8.9,-1.4,-4.0,-6.0,0.1,-4.1,-3.4,-2.7,-7.9,-3.1,-2.2,-7.2,-2.2,1.4,-5.4,0.9,0.3,-8.5,2.9,1.0,-8.7,1.5,4.5,-8.9,3.9,7.5,-7.1,1.5,9.7,-3.4,1.0,10.1,-3.5,-1.5,7.3,-4.6,1.2,4.9,-2.1,3.8,6.1,0.8,1.4,5.9,-0.4,0.5,2.4,-0.3,4.1,1.1,3.1,4.4,2.7,4.8,1.1,1.7,2.9,1.2,-1.6,2.6,4.8,-2.7,2.2,3.4,-6.2,-0.0,0.4,-5.7,-2.4,2.7,-3.9,-2.0,5.6,-6.3,-0.3,8.6,-4.9,2.0,9.6,-7.7],[8.2,12.4,-3.3,9.5,9.0,-4.6,6.5,7.4,-6.4,6.9,3.6,-6.3,6.6,0.5,-4.2,8.9,-0.2,-1.3,7.1,-3.0,0.5,8.1,-6.6,0.1,6.0,-6.5,-3.1,3.4,-9.2,-2.6,2.1,-7.2,0.4,0.8,-4.3,-1.7,-1.1,-6.6,-4.0,-2.1,-9.0,-1.2,-3.8,-6.0,0.5,-4.2,-3.6,-2.4,-8.0,-3.4,-1.8,-7.2,-2.2,1.8,-5.3,0.8,0.4,-8.5,2.9,1.1,-8.7,1.7,4.6,-8.9,4.2,7.4,-7.1,1.9,9.8,-3.3,1.5,10.1,-3.5,-1.2,7.4,-4.5,1.4,4.9,-2.1,4.1,6.0,0.8,1.6,6.0,-0.3,0.4,2.6,-0.2,3.9,1.0,3.3,4.3,2.5,4.9,1.0,1.6,2.9,0.9,-1.6,2.7,4.5,-2.8,2.3,3.0,-6.3,-0.0,0.1,-5.7,-2.4,2.3,-3.8,-2.0,5.0,-6.5,-0.8,8.3,-5.0,1.2,9.6,-7.9],[10.9,11.0,-2.5,9.3,9.7,-5.7,6.2,7.5,-5.9,6.6,3.7,-6.1,6.4,0.5,-4.1,8.8,-0.2,-1.3,7.0,-3.0,0.5,8.0,-6.7,-0.0,6.1,-6.4,-3.3,3.4,-9.1,-2.9,2.1,-7.2,0.1,0.8,-4.3,-1.9,-1.0,-6.5,-4.4,-2.1,-8.9,-1.7,-4.0,-6.1,0.0,-4.2,-3.6,-2.8,-8.0,-3.3,-2.2,-7.3,-2.4,1.4,-5.4,0.7,0.4,-8.6,2.7,1.2,-8.7,1.2,4.7,-8.9,3.5,7.6,-7.0,1.1,9.9,-3.3,0.7,10.1,-3.4,-1.8,7.3,-4.5,1.0,4.9,-2.1,3.6,6.2,0.8,1.2,5.8,-0.4,0.3,2.4,-0.4,3.9,1.1,3.1,4.2,2.6,4.8,0.9,1.6,2.8,1.1,-1.6,2.4,4.7,-2.7,2.0,3.4,-6.2,-0.2,0.3,-5.7,-2.6,2.6,-3.8,-2.2,5.5,-6.2,-0.5,8.6,-4.7,1.8,9.6,-7.6],[8.8,12.8,-3.4,9.0,9.9,-5.9,6.1,7.5,-6.1,6.6,3.7,-6.1,6.4,0.5,-4.1,8.8,-0.2,-1.3,7.0,-3.0,0.5,8.0,-6.6,0.1,6.0,-6.5,-3.1,3.3,-9.1,-2.7,2.1,-7.1,0.3,0.8,-4.2,-1.8,-1.1,-6.5,-4.1,-2.2,-8.8,-1.3,-4.0,-5.9,0.3,-4.2,-3.4,-2.5,-8.0,-3.0,-2.0,-7.2,-2.2,1.6,-5.4,1.0,0.6,-8.6,2.9,1.1,-9.0,1.4,4.6,-9.6,3.9,7.4,-7.2,2.1,9.7,-3.6,1.1,10.4,-3.6,-1.3,7.4,-4.6,1.5,5.0,-2.0,4.0,6.2,0.8,1.4,6.2,-0.4,0.5,2.7,-0.2,4.0,1.2,3.3,4.2,2.8,4.9,0.9,1.7,2.9,1.1,-1.5,2.5,4.7,-2.6,2.0,3.4,-6.1,-0.2,0.4,-5.6,-2.5,2.7,-3.6,-2.2,5.5,-6.1,-0.4,8.6,-4.8,1.8,9.5,-7.8],[9.7,12.3,-2.5,9.8,9.5,-5.1,6.5,7.7,-5.6,6.7,3.9,-5.9,6.4,0.5,-4.2,8.8,-0.2,-1.3,7.0,-3.1,0.4,8.0,-6.7,-0.1,5.9,-6.5,-3.3,3.3,-9.2,-2.8,2.1,-7.3,0.2,0.7,-4.4,-1.9,-1.2,-6.7,-4.2,-2.2,-9.2,-1.5,-3.9,-6.2,0.2,-4.3,-3.7,-2.7,-8.1,-3.5,-2.1,-7.3,-2.4,1.4,-5.4,0.7,0.2,-8.5,2.7,1.1,-8.7,1.2,4.6,-8.9,3.6,7.6,-7.1,1.1,9.8,-3.3,0.7,10.1,-3.5,-1.8,7.2,-4.6,1.0,4.9,-2.1,3.6,6.1,0.8,1.1,5.8,-0.4,0.2,2.3,-0.4,3.8,1.0,3.1,4.1,2.6,4.8,0.8,1.6,2.8,0.9,-1.7,2.5,4.5,-2.8,2.1,3.1,-6.3,-0.2,0.1,-5.7,-2.5,2.6,-3.9,-2.0,5.4,-6.4,-0.5,8.5,-4.7,1.7,9.8,-7.4],[8.1,13.1,-5.0,9.4,9.7,-5.7,6.3,7.5,-5.9,6.8,3.7,-6.0,6.5,0.5,-4.0,8.9,-0.2,-1.1,7.0,-3.0,0.7,8.0,-6.7,0.2,6.0,-6.4,-3.1,3.3,-9.1,-2.6,2.0,-7.2,0.4,0.8,-4.2,-1.7,-1.1,-6.4,-4.1,-2.2,-8.9,-1.4,-4.1,-6.0,0.2,-4.2,-3.4,-2.6,-8.0,-3.0,-2.2,-7.3,-2.1,1.5,-5.4,1.0,0.4,-8.5,3.1,1.1,-8.7,1.6,4.7,-8.9,4.0,7.6,-7.1,1.6,9.9,-3.4,1.1,10.2,-3.5,-1.5,7.4,-4.6,1.3,5.0,-2.1,3.8,6.2,0.8,1.4,6.0,-0.4,0.5,2.5,-0.2,4.0,1.2,3.2,4.3,2.8,4.8,1.0,1.8,2.9,1.1,-1.5,2.6,4.8,-2.5,2.2,3.4,-6.1,-0.1,0.3,-5.6,-2.4,2.8,-3.8,-2.0,5.6,-6.3,-0.2,8.6,-4.8,2.0,9.5,-7.7],[10.6,11.8,-2.5,9.6,9.8,-5.6,6.5,7.7,-5.9,6.7,3.9,-6.2,6.4,0.6,-4.3,8.8,-0.1,-1.5,7.1,-2.9,0.4,8.1,-6.5,-0.1,6.0,-6.5,-3.2,3.4,-9.2,-2.7,2.1,-7.2,0.3,0.8,-4.3,-1.8,-1.1,-6.7,-4.1,-2.1,-9.1,-1.3,-3.8,-6.1,0.3,-4.3,-3.7,-2.7,-8.0,-3.5,-2.0,-7.2,-2.3,1.4,-5.4,0.8,0.1,-8.4,2.8,1.1,-8.5,1.4,4.6,-8.8,3.8,7.5,-6.9,1.5,9.8,-3.1,1.1,10.0,-3.3,-1.5,7.2,-4.5,1.2,4.8,-2.0,3.9,5.9,0.9,1.5,5.7,-0.4,0.4,2.3,-0.4,3.9,0.8,3.1,4.3,2.3,4.8,1.0,1.5,2.8,1.0,-1.8,2.5,4.6,-3.0,2.1,3.1,-6.4,-0.2,0.1,-5.8,-2.5,2.6,-4.1,-2.0,5.4,-6.6,-0.6,8.5,-5.0,1.7,9.7,-7.8],[9.0,13.0,-3.4,9.2,10.0,-5.7,6.3,7.6,-6.0,6.7,3.8,-6.1,6.5,0.5,-4.2,8.9,-0.2,-1.3,7.1,-3.0,0.4,8.1,-6.7,-0.2,6.2,-6.4,-3.4,3.5,-9.0,-3.1,2.2,-7.2,-0.0,0.9,-4.2,-1.9,-0.9,-6.4,-4.5,-2.0,-8.9,-1.9,-3.8,-6.1,-0.1,-4.1,-3.5,-2.9,-7.8,-3.2,-2.3,-7.1,-2.4,1.3,-5.3,0.8,0.3,-8.5,2.7,1.0,-8.7,1.3,4.5,-9.1,3.7,7.4,-7.2,1.4,9.7,-3.4,0.9,10.1,-3.6,-1.6,7.2,-4.6,1.2,4.8,-2.1,3.7,6.1,0.8,1.2,6.0,-0.3,0.3,2.5,-0.1,3.9,1.1,3.3,4.1,2.7,4.9,0.9,1.6,2.9,1.1,-1.6,2.7,4.7,-2.6,2.1,3.5,-6.1,-0.0,0.4,-5.7,-2.4,2.7,-3.8,-2.1,5.6,-6.2,-0.3,8.6,-4.7,1.9,9.6,-7.7],[10.7,11.4,-2.0,9.9,9.5,-5.2,6.6,7.7,-5.5,6.7,3.9,-5.9,6.4,0.5,-4.1,8.7,-0.2,-1.2,6.8,-3.1,0.5,8.1,-6.6,0.1,6.0,-6.8,-3.0,3.3,-9.4,-2.3,2.0,-7.1,0.4,0.6,-4.4,-2.0,-1.0,-7.0,-4.3,-2.3,-9.2,-1.5,-3.7,-6.0,0.1,-4.5,-4.0,-3.0,-8.2,-3.7,-2.2,-7.2,-2.8,1.3,-5.6,0.5,0.1,-8.8,2.2,1.0,-8.8,0.8,4.6,-9.5,3.3,7.4,-7.3,1.2,9.6,-3.5,0.8,10.0,-3.5,-1.7,7.2,-4.7,1.0,4.8,-2.2,3.6,6.0,0.7,1.2,5.8,-0.5,0.3,2.3,-0.5,3.8,1.0,3.0,4.2,2.5,4.7,0.9,1.6,2.8,0.9,-1.7,2.4,4.5,-2.8,2.1,3.1,-6.3,-0.2,0.1,-5.8,-2.5,2.6,-4.0,-1.9,5.5,-6.4,-0.5,8.5,-4.7,1.9,9.8,-7.4],[9.6,12.5,-2.8,9.1,10.1,-5.7,6.2,7.6,-6.0,6.7,3.8,-6.2,6.5,0.5,-4.3,8.9,-0.2,-1.5,7.1,-3.1,0.3,8.1,-6.7,-0.3,6.1,-6.5,-3.5,3.3,-9.1,-3.2,2.1,-7.2,-0.1,0.8,-4.2,-2.0,-1.0,-6.3,-4.6,-2.2,-8.8,-1.9,-3.9,-6.0,-0.1,-4.2,-3.4,-2.9,-7.9,-3.1,-2.3,-7.2,-2.3,1.3,-5.4,0.9,0.3,-8.6,2.8,1.0,-8.9,1.2,4.4,-9.4,3.7,7.2,-7.1,1.8,9.5,-3.5,0.8,10.2,-3.5,-1.6,7.2,-4.5,1.2,4.9,-2.0,3.8,6.1,0.8,1.2,6.0,-0.3,0.4,2.5,-0.1,3.9,1.1,3.3,4.1,2.7,4.9,0.9,1.6,2.9,1.1,-1.6,2.6,4.7,-2.6,2.1,3.5,-6.2,-0.1,0.4,-5.7,-2.4,2.7,-3.8,-2.1,5.6,-6.2,-0.3,8.6,-4.8,1.9,9.6,-7.7],[11.7,11.0,-2.6,9.8,9.8,-5.7,6.5,8.0,-5.5,6.2,4.2,-5.8,6.0,0.9,-4.0,8.6,0.1,-1.4,7.0,-2.9,0.3,8.3,-6.4,-0.2,6.1,-6.5,-3.3,3.4,-9.1,-2.6,2.4,-7.1,0.4,0.8,-4.4,-1.8,-1.0,-6.8,-4.1,-2.0,-9.1,-1.2,-3.7,-6.1,0.4,-4.2,-3.8,-2.6,-8.0,-3.7,-2.0,-7.2,-2.4,1.5,-5.4,0.7,0.3,-8.5,2.6,1.3,-8.7,1.1,4.8,-9.4,3.6,7.6,-6.8,2.1,9.8,-3.1,1.0,10.2,-3.4,-1.5,7.3,-4.5,1.2,5.0,-2.1,3.8,6.1,0.8,1.4,5.8,-0.4,0.4,2.4,-0.4,3.9,1.0,3.0,4.4,2.5,4.8,1.1,1.6,2.8,1.0,-1.6,2.3,4.5,-2.8,2.0,3.0,-6.3,-0.3,0.1,-5.7,-2.6,2.6,-4.0,-2.1,5.4,-6.5,-0.8,8.5,-4.8,1.6,9.8,-7.5],[9.7,13.4,-4.3,9.7,10.3,-6.5,6.9,7.7,-6.0,6.9,3.9,-6.1,6.6,0.7,-4.1,9.0,-0.2,-1.3,7.1,-3.1,0.4,8.1,-6.7,-0.3,6.0,-6.4,-3.4,3.4,-9.1,-3.0,2.1,-7.3,0.1,0.9,-4.2,-1.8,-1.1,-6.5,-4.2,-2.1,-9.0,-1.5,-3.8,-6.0,0.2,-4.2,-3.5,-2.6,-7.9,-3.3,-2.0,-7.2,-2.3,1.5,-5.4,0.9,0.4,-8.5,2.8,1.2,-8.8,1.3,4.7,-8.9,3.8,7.6,-7.1,1.2,9.7,-3.3,0.7,10.3,-3.2,-1.7,7.4,-4.3,1.1,5.1,-1.8,3.6,6.3,1.1,1.2,5.9,-0.3,0.3,2.4,-0.2,3.9,1.2,3.3,4.1,2.7,4.9,0.9,1.6,2.9,1.1,-1.6,2.7,4.7,-2.6,2.2,3.5,-6.2,-0.0,0.4,-5.6,-2.4,2.7,-3.7,-2.4,5.1,-6.7,-1.2,8.2,-4.9,1.2,9.4,-7.6]],"ss":[[3,40],[12,33],[19,37]],"helix":[[9,15],[23,33]],"iface_pos":[6,8,10,24,28],"iface_hyd":[11,15,27,29]};
+/* ---------------------------------------------------------------- diller */
+const I18N = {
+  tr: {
+    lang: 'tr',
+    eyebrow: 'Aurelia aurita · PDB 2LG4 · TÜBİTAK 2204-A',
+    title: 'Aurelin Atlası',
+    lede: 'Ay denizanasından izole edilen 40 amino asitlik antimikrobiyal peptidin çözelti yapısı, fizikokimyasal profili ve membran seçiciliği — gerçek deneysel verilerle.',
+    nav1: 'Yapı', nav2: 'Profil', nav3: 'Seçicilik', nav4: 'Yöntem',
+
+    s1kick: '01 — Üç boyutlu yapı',
+    s1h: 'Aurelin’in çözelti NMR yapısı',
+    s1p: 'Shenkarev ve ark. (2012) rekombinant olarak ürettikleri aurelinin yapısını NMR ile çözmüş ve 20 modelli bir topluluk yayımlamıştır. Aşağıdaki görüntü bu yapının (PDB 2LG4) <em>gerçek atom koordinatlarıyla</em> çizilmektedir. Üç disülfit köprüsü peptidin çekirdeğini kilitler; UniProt’ta işaretli dokuz kalıntı ise misel yüzeyiyle doğrudan temas eden bağlanma yüzünü oluşturur.',
+    viewHint: 'Sürükleyin · tekerlekle yakınlaştırın · kalıntıya tıklayın',
+    lblRep: 'Gösterim', repTube: 'Tüp', repStick: 'Çubuk', repEns: 'Topluluk',
+    lblCol: 'Renk', colProp: 'Özellik', colSS: 'İkincil yapı', colRain: 'N→C',
+    tgSS: 'Disülfitler', tgIf: 'Arayüz kalıntıları', tgSpin: 'Döndür',
+    reset: 'Sıfırla',
+    legCat: 'Katyonik (K/R/H)', legAni: 'Anyonik (D/E)', legHyd: 'Hidrofobik',
+    legPol: 'Polar', legCys: 'Sistein / disülfit',
+    seqLabel: 'Dizi — bir kalıntıya tıklayın',
+    rdRes: 'Kalıntı', rdPos: 'Konum', rdClass: 'Sınıf', rdNote: 'Açıklama',
+    rdEmpty: 'Bir kalıntı seçin',
+    noteSS: 'Disülfit köprüsü kurar',
+    noteHelix: 'α-heliks içinde',
+    notePos: 'Yan zinciri misel içine uzanır ya da yüzeyine çok yakın durur (UniProt).',
+    noteHyd: 'Yan zinciri misel bağlanma arayüzünde yer alır (UniProt).',
+    f1l: 'amino asit', f2l: 'ortalama kütle', f3l: 'disülfit köprüsü',
+    f4l: 'α-heliks', f5l: 'NMR modeli', f6l: 'net yük (pH 7,4)',
+    prov: 'Koordinatlar: RCSB PDB <a href="https://www.rcsb.org/structure/2LG4" target="_blank" rel="noopener">2LG4</a> (Shenkarev ve ark., 2012, 20 modelli çözelti NMR). Kalıntı açıklamaları: UniProt <a href="https://www.uniprot.org/uniprotkb/Q0MWV8/entry" target="_blank" rel="noopener">Q0MWV8</a>.',
+
+    s2kick: '02 — Fizikokimyasal profil',
+    s2h: 'Dizi girin, profili çıkarın',
+    s2p: 'Hesaplar tümüyle tarayıcıda çalışır. Aşağıdaki “sisteinleri köprülü say” kutusu boşken aurelin için üretilen değerler ExPASy ProtParam çıktısıyla birebir örtüşür: 4302,97 Da · pI 9,13 · alifatik indeks 46,50 · GRAVY −0,458. Kutu işaretliyken kütle doğal (köprülü) hâle göre 4296,92 Da’ya iner ve sisteinler artık iyonlaşamadığı için pI yükselir. LC-MS/MS diziniz elinize geçtiğinde buraya yapıştırıp aynı profili alabilirsiniz.',
+    seqInLabel: 'Amino asit dizisi (tek harf kodu)',
+    presets: 'Hazır diziler', ssToggle: 'Sisteinleri köprülü say',
+    ssHint: 'köprü başına −2H',
+    mLen: 'Uzunluk', mAvg: 'Ortalama kütle', mMono: 'Monoizotopik',
+    mChg: 'Net yük · pH 7,4', mPI: 'Teorik pI', mHyd: 'Hidrofobik oran',
+    mAli: 'Alifatik indeks', mGrv: 'GRAVY', mBom: 'Boman', mExt: 'ε₂₈₀',
+    uAA: 'aa', uDa: 'Da', uKcal: 'kcal/mol', uM1: 'M⁻¹cm⁻¹',
+    wheelH: 'Helisel tekerlek', wheelSub: '100°/kalıntı · ok = hidrofobik moment',
+    wheelWin: 'Pencere', wWhole: 'Tüm dizi', wH1: 'Heliks 1 (9–15)', wH2: 'Heliks 2 (23–33)',
+    chargeH: 'Yüke karşı pH', chargeSub: 'Bjellqvist pKa seti',
+    axPH: 'pH', axCharge: 'net yük',
+    calcNote: 'pKa değerleri Bjellqvist (ExPASy) setinden alınmıştır. Hidrofobiklik ve moment Fauchère–Pliska ölçeğiyle, ardışık kalıntılar arasında 100° açı varsayılarak hesaplanır. Alifatik indeks Ikai (1980), GRAVY Kyte–Doolittle, Boman indeksi Boman (2003) tanımına göredir. ProtParam pI ve net yükü her zaman indirgenmiş hâl için hesaplar; bu yüzden köprü kutusu kapalıyken değerler onunla birebir örtüşür, açıkken doğal disülfitli hâli temsil eder.',
+    badSeq: 'Tanınmayan harfler yok sayıldı',
+
+    s3kick: '03 — Membran seçiciliği',
+    s3h: 'Neden bakteriye zarar verir de bize vermez?',
+    s3p: 'Bakteri zarının dış yüzü negatif yüklüdür (fosfatidilgliserol, kardiyolipin, LPS). Memeli hücre zarının dış yüzü ise nötr, yani zwitteriyoniktir (fosfatidilkolin). Katyonik bir peptit bu farkı elektrostatik olarak okur. Aurelin için bu ayrım deneyle gösterilmiştir: peptit negatif yüklü POPC/DOPG (3:1) veziküllerine bağlanırken saf POPC veziküllerine bağlanmaz.',
+    schematic: 'Şematik animasyon — ölçekli değildir',
+    memA: 'Bakteri zarı', memAsub: 'anyonik · POPG / kardiyolipin / LPS',
+    memB: 'Memeli zarı', memBsub: 'zwitteriyonik · POPC / kolesterol',
+    capA: 'Katyonik peptit negatif başgruplara çekilir, yüzeye yapışır ve zara yerleşir.',
+    capB: 'Net elektrostatik çekim yoktur; peptit bağlanmadan geçip gider.',
+    memNote: 'Animasyon mekanizmayı anlatmak içindir. Dayandığı deneysel gözlem: aurelin POPC/DOPG (3:1) veziküllerine orta düzeyde afinite gösterir, saf POPC veziküllerine bağlanmaz (UniProt Q0MWV8; Shenkarev ve ark., 2012).',
+    play: 'Oynat', pause: 'Duraklat',
+
+    s4kick: '04 — Yöntem akışı',
+    s4h: 'Denizanasından diziye',
+    s4p: 'Projenin iş paketleri, her biri bir sonrakinin girdisini üreten yedi adımdan oluşuyor. Bir adıma tıklayın.',
+    st1: 'Ekstraksiyon', st1s: 'Mukus ve nematokist',
+    st1d: 'Yüzey mukusu soğuk Tris-HCl ile nazikçe yıkanarak toplanır. Tentaküllerden izole edilen nematokistler ardışık dondur-çöz döngüleri ve buz üzerinde ultrasonikasyonla boşaltılır; içerik santrifüjle kapsül kılıflarından ayrılır.',
+    st2: 'Jel filtrasyon', st2s: 'Sephadex G-50',
+    st2d: 'Molekül ağırlığına göre ayrım. Büyük moleküller jel gözeneklerine giremez ve kolonu erken terk eder; küçük peptitler gözeneklerde oyalanıp geç elüe olur. Fraksiyonlar 280 nm’de izlenir.',
+    st3: 'RP-HPLC', st3s: 'C18 · %5→65 asetonitril',
+    st3d: 'Polariteye göre yüksek çözünürlüklü ayrım. Hidrofobik peptitler kolona daha sıkı tutunur ve gradiyentin geç bölümünde çıkar. Dedeksiyon peptit bağı için 220 nm’de yapılır.',
+    st4: 'Saflık kontrolü', st4s: 'Tricine SDS-PAGE',
+    st4d: 'Düşük molekül ağırlıklı peptitlerde Laemmli sistemi yetersiz kaldığından Tricine jeli kullanılır. Gümüş boyamada tek bant görülmesi, örneğin elektroforetik olarak saf kabul edilmesi ölçütüdür.',
+    st5: 'Aktivite', st5s: 'MIC ve MBC',
+    st5d: 'İki katlı seri seyreltme serisinde üremenin gözlenmediği en düşük derişim MIC’tir. Resazurin göstergesi canlılığı renkle doğrular: mavi üreme yok, pembe üreme var. MBC için üremeyen kuyucuklardan agara ekim yapılır.',
+    st6: 'LC-MS/MS', st6s: 'Kütle ve dizi',
+    st6d: 'İntakt kütle, çoklu yüklü iyon serisinin dekonvolüsyonuyla bulunur. Disülfitler indirgenip alkillendikten ve örnek tripsinle sindirildikten sonra, parçaların b ve y iyon serilerinden amino asit dizisi okunur.',
+    st7: 'In-siliko', st7s: 'Modelleme ve kenetlenme',
+    st7d: 'Dizi belirlendikten sonra yapı AlphaFold ve SWISS-MODEL ile modellenir; aurelin için yayımlanmış 2LG4 yapısıyla karşılaştırılarak yöntem doğrulanır. Ardından bakteriyel ve memeli membran modellerine kenetlenme enerjileri hesaplanır.',
+    stepOf: 'Adım',
+
+    ftTitle: 'Kaynaklar ve şeffaflık',
+    ftBody: 'Bu sayfa bir TÜBİTAK 2204-A proje çalışması kapsamında hazırlanmıştır. Üç boyutlu yapı ve kalıntı açıklamaları kamuya açık veri tabanlarından alınan gerçek verilerdir. Fizikokimyasal hesaplar tarayıcıda, yayımlanmış ölçeklerle yapılır ve ExPASy ProtParam’a karşı doğrulanmıştır. Membran seçiciliği bölümündeki hareketli görsel ise şematiktir: gerçek bir simülasyonun çıktısı değil, deneysel gözlemin anlatımıdır.',
+    ftSrc: 'Kaynaklar',
+    ftDisc: 'Proje henüz uygulama aşamasındadır; bu sayfada projenin kendi deneysel verisi yer almaz.'
+  },
+
+  en: {
+    lang: 'en',
+    eyebrow: 'Aurelia aurita · PDB 2LG4 · TÜBİTAK 2204-A',
+    title: 'Aurelin Atlas',
+    lede: 'The solution structure, physicochemical profile and membrane selectivity of a 40-residue antimicrobial peptide from the moon jellyfish — built on real experimental data.',
+    nav1: 'Structure', nav2: 'Profile', nav3: 'Selectivity', nav4: 'Method',
+
+    s1kick: '01 — Three-dimensional structure',
+    s1h: 'The solution NMR structure of aurelin',
+    s1p: 'Shenkarev et al. (2012) expressed aurelin recombinantly, solved its structure by NMR and published a 20-model ensemble. The view below is drawn from the <em>real atomic coordinates</em> of that structure (PDB 2LG4). Three disulfide bridges lock the core of the peptide, while nine residues annotated in UniProt form the face that contacts the micelle surface directly.',
+    viewHint: 'Drag to rotate · scroll to zoom · click a residue',
+    lblRep: 'Representation', repTube: 'Tube', repStick: 'Sticks', repEns: 'Ensemble',
+    lblCol: 'Colour', colProp: 'Property', colSS: 'Secondary structure', colRain: 'N→C',
+    tgSS: 'Disulfides', tgIf: 'Interface residues', tgSpin: 'Spin',
+    reset: 'Reset',
+    legCat: 'Cationic (K/R/H)', legAni: 'Anionic (D/E)', legHyd: 'Hydrophobic',
+    legPol: 'Polar', legCys: 'Cysteine / disulfide',
+    seqLabel: 'Sequence — click a residue',
+    rdRes: 'Residue', rdPos: 'Position', rdClass: 'Class', rdNote: 'Annotation',
+    rdEmpty: 'Select a residue',
+    noteSS: 'Forms a disulfide bridge',
+    noteHelix: 'Within an α-helix',
+    notePos: 'Side chain protrudes into the micelle interior or sits close to its surface (UniProt).',
+    noteHyd: 'Side chain lies at the micelle binding interface (UniProt).',
+    f1l: 'amino acids', f2l: 'average mass', f3l: 'disulfide bridges',
+    f4l: 'α-helices', f5l: 'NMR models', f6l: 'net charge (pH 7.4)',
+    prov: 'Coordinates: RCSB PDB <a href="https://www.rcsb.org/structure/2LG4" target="_blank" rel="noopener">2LG4</a> (Shenkarev et al., 2012; 20-model solution NMR). Residue annotations: UniProt <a href="https://www.uniprot.org/uniprotkb/Q0MWV8/entry" target="_blank" rel="noopener">Q0MWV8</a>.',
+
+    s2kick: '02 — Physicochemical profile',
+    s2h: 'Enter a sequence, read the profile',
+    s2p: 'Everything is computed in the browser. With the “treat cysteines as bridged” box cleared, the values for aurelin reproduce ExPASy ProtParam exactly: 4302.97 Da · pI 9.13 · aliphatic index 46.50 · GRAVY −0.458. Tick the box and the mass drops to 4296.92 Da for the native bridged form, while the pI rises because the cysteines can no longer ionise. Once your own LC-MS/MS sequence is in hand, paste it here for the same profile.',
+    seqInLabel: 'Amino acid sequence (one-letter code)',
+    presets: 'Presets', ssToggle: 'Treat cysteines as bridged',
+    ssHint: '−2H per bridge',
+    mLen: 'Length', mAvg: 'Average mass', mMono: 'Monoisotopic',
+    mChg: 'Net charge · pH 7.4', mPI: 'Theoretical pI', mHyd: 'Hydrophobic fraction',
+    mAli: 'Aliphatic index', mGrv: 'GRAVY', mBom: 'Boman', mExt: 'ε₂₈₀',
+    uAA: 'aa', uDa: 'Da', uKcal: 'kcal/mol', uM1: 'M⁻¹cm⁻¹',
+    wheelH: 'Helical wheel', wheelSub: '100°/residue · arrow = hydrophobic moment',
+    wheelWin: 'Window', wWhole: 'Whole sequence', wH1: 'Helix 1 (9–15)', wH2: 'Helix 2 (23–33)',
+    chargeH: 'Charge versus pH', chargeSub: 'Bjellqvist pKa set',
+    axPH: 'pH', axCharge: 'net charge',
+    calcNote: 'pKa values follow the Bjellqvist (ExPASy) set. Hydrophobicity and hydrophobic moment use the Fauchère–Pliska scale with a 100° angle between consecutive residues. Aliphatic index follows Ikai (1980), GRAVY follows Kyte–Doolittle and the Boman index follows Boman (2003). ProtParam always computes pI and net charge for the reduced form, which is why the values match it exactly with the bridge box cleared and represent the native disulfide-bonded form when it is ticked.',
+    badSeq: 'Unrecognised characters were ignored',
+
+    s3kick: '03 — Membrane selectivity',
+    s3h: 'Why does it damage bacteria and not us?',
+    s3p: 'The outer face of a bacterial membrane carries a negative charge (phosphatidylglycerol, cardiolipin, LPS). The outer face of a mammalian cell membrane is neutral — zwitterionic phosphatidylcholine. A cationic peptide reads that difference electrostatically. For aurelin the distinction has been shown experimentally: the peptide binds negatively charged POPC/DOPG (3:1) vesicles but not pure POPC vesicles.',
+    schematic: 'Schematic animation — not to scale',
+    memA: 'Bacterial membrane', memAsub: 'anionic · POPG / cardiolipin / LPS',
+    memB: 'Mammalian membrane', memBsub: 'zwitterionic · POPC / cholesterol',
+    capA: 'The cationic peptide is drawn to the negative headgroups, adsorbs and inserts into the bilayer.',
+    capB: 'There is no net electrostatic attraction; the peptide drifts past without binding.',
+    memNote: 'The animation exists to explain the mechanism. Its experimental basis: aurelin shows moderate affinity for POPC/DOPG (3:1) vesicles and does not interact with pure POPC vesicles (UniProt Q0MWV8; Shenkarev et al., 2012).',
+    play: 'Play', pause: 'Pause',
+
+    s4kick: '04 — Method flow',
+    s4h: 'From jellyfish to sequence',
+    s4p: 'The project’s work packages break into seven steps, each producing the input for the next. Click a step.',
+    st1: 'Extraction', st1s: 'Mucus and nematocysts',
+    st1d: 'Surface mucus is collected by gently washing the bell with cold Tris-HCl. Nematocysts isolated from the tentacles are discharged by successive freeze-thaw cycles and sonication on ice; the contents are separated from the capsule walls by centrifugation.',
+    st2: 'Gel filtration', st2s: 'Sephadex G-50',
+    st2d: 'Separation by molecular weight. Large molecules cannot enter the gel pores and leave the column early; small peptides linger in the pores and elute late. Fractions are monitored at 280 nm.',
+    st3: 'RP-HPLC', st3s: 'C18 · 5→65% acetonitrile',
+    st3d: 'High-resolution separation by polarity. Hydrophobic peptides bind the column more tightly and elute in the later part of the gradient. Detection is at 220 nm for the peptide bond.',
+    st4: 'Purity check', st4s: 'Tricine SDS-PAGE',
+    st4d: 'The Laemmli system resolves low-molecular-weight peptides poorly, so a Tricine gel is used instead. A single band on silver staining is the criterion for calling the sample electrophoretically pure.',
+    st5: 'Activity', st5s: 'MIC and MBC',
+    st5d: 'In a two-fold dilution series, the lowest concentration with no visible growth is the MIC. A resazurin indicator confirms viability by colour: blue means no growth, pink means growth. For the MBC, wells without growth are plated onto agar.',
+    st6: 'LC-MS/MS', st6s: 'Mass and sequence',
+    st6d: 'The intact mass comes from deconvolution of the multiply charged ion series. After the disulfides are reduced and alkylated and the sample digested with trypsin, the amino acid sequence is read from the b- and y-ion series of the fragments.',
+    st7: 'In silico', st7s: 'Modelling and docking',
+    st7d: 'Once the sequence is known, the structure is modelled with AlphaFold and SWISS-MODEL and validated against the published 2LG4 structure of aurelin. Docking energies against bacterial and mammalian membrane models follow.',
+    stepOf: 'Step',
+
+    ftTitle: 'Sources and transparency',
+    ftBody: 'This page was made for a TÜBİTAK 2204-A research project. The three-dimensional structure and the residue annotations are real data taken from public databases. The physicochemical calculations run in the browser using published scales and were verified against ExPASy ProtParam. The moving figure in the membrane selectivity section is schematic: it is an explanation of an experimental observation, not the output of a simulation.',
+    ftSrc: 'Sources',
+    ftDisc: 'The project is still at the implementation stage; none of the project’s own experimental data appears on this page.'
+  },
+
+  el: {
+    lang: 'el',
+    eyebrow: 'Aurelia aurita · PDB 2LG4 · TÜBİTAK 2204-A',
+    title: 'Άτλας Ορελίνης',
+    lede: 'Η δομή σε διάλυμα, το φυσικοχημικό προφίλ και η εκλεκτικότητα ως προς τη μεμβράνη ενός αντιμικροβιακού πεπτιδίου 40 αμινοξέων από τη μέδουσα-σελήνη — με πραγματικά πειραματικά δεδομένα.',
+    nav1: 'Δομή', nav2: 'Προφίλ', nav3: 'Εκλεκτικότητα', nav4: 'Μέθοδος',
+
+    s1kick: '01 — Τρισδιάστατη δομή',
+    s1h: 'Η δομή της ορελίνης σε διάλυμα με NMR',
+    s1p: 'Οι Shenkarev κ.ά. (2012) παρήγαγαν ανασυνδυασμένη ορελίνη, έλυσαν τη δομή της με NMR και δημοσίευσαν ένα σύνολο 20 μοντέλων. Η παρακάτω απεικόνιση σχεδιάζεται από τις <em>πραγματικές ατομικές συντεταγμένες</em> αυτής της δομής (PDB 2LG4). Τρεις δισουλφιδικές γέφυρες κλειδώνουν τον πυρήνα του πεπτιδίου, ενώ εννέα κατάλοιπα σημειωμένα στη UniProt σχηματίζουν την επιφάνεια που έρχεται σε άμεση επαφή με το μικκύλιο.',
+    viewHint: 'Σύρετε για περιστροφή · κύλιση για ζουμ · κάντε κλικ σε κατάλοιπο',
+    lblRep: 'Απεικόνιση', repTube: 'Σωλήνας', repStick: 'Ράβδοι', repEns: 'Σύνολο',
+    lblCol: 'Χρώμα', colProp: 'Ιδιότητα', colSS: 'Δευτεροταγής δομή', colRain: 'N→C',
+    tgSS: 'Δισουλφίδια', tgIf: 'Κατάλοιπα επαφής', tgSpin: 'Περιστροφή',
+    reset: 'Επαναφορά',
+    legCat: 'Κατιονικά (K/R/H)', legAni: 'Ανιονικά (D/E)', legHyd: 'Υδρόφοβα',
+    legPol: 'Πολικά', legCys: 'Κυστεΐνη / δισουλφίδιο',
+    seqLabel: 'Αλληλουχία — κάντε κλικ σε κατάλοιπο',
+    rdRes: 'Κατάλοιπο', rdPos: 'Θέση', rdClass: 'Κατηγορία', rdNote: 'Σημείωση',
+    rdEmpty: 'Επιλέξτε ένα κατάλοιπο',
+    noteSS: 'Σχηματίζει δισουλφιδική γέφυρα',
+    noteHelix: 'Εντός α-έλικας',
+    notePos: 'Η πλευρική αλυσίδα εισχωρεί στο εσωτερικό του μικκυλίου ή βρίσκεται πολύ κοντά στην επιφάνειά του (UniProt).',
+    noteHyd: 'Η πλευρική αλυσίδα βρίσκεται στη διεπιφάνεια πρόσδεσης του μικκυλίου (UniProt).',
+    f1l: 'αμινοξέα', f2l: 'μέση μάζα', f3l: 'δισουλφιδικές γέφυρες',
+    f4l: 'α-έλικες', f5l: 'μοντέλα NMR', f6l: 'καθαρό φορτίο (pH 7,4)',
+    prov: 'Συντεταγμένες: RCSB PDB <a href="https://www.rcsb.org/structure/2LG4" target="_blank" rel="noopener">2LG4</a> (Shenkarev κ.ά., 2012· NMR διαλύματος, 20 μοντέλα). Σημειώσεις καταλοίπων: UniProt <a href="https://www.uniprot.org/uniprotkb/Q0MWV8/entry" target="_blank" rel="noopener">Q0MWV8</a>.',
+
+    s2kick: '02 — Φυσικοχημικό προφίλ',
+    s2h: 'Δώστε αλληλουχία, δείτε το προφίλ',
+    s2p: 'Όλοι οι υπολογισμοί γίνονται στο πρόγραμμα περιήγησης. Με το πλαίσιο «οι κυστεΐνες ως γεφυρωμένες» κενό, οι τιμές για την ορελίνη αναπαράγουν ακριβώς το ExPASy ProtParam: 4302,97 Da · pI 9,13 · δείκτης αλειφατικότητας 46,50 · GRAVY −0,458. Με το πλαίσιο επιλεγμένο η μάζα πέφτει στα 4296,92 Da για τη φυσική γεφυρωμένη μορφή, ενώ το pI ανεβαίνει επειδή οι κυστεΐνες δεν μπορούν πλέον να ιονιστούν. Μόλις έχετε τη δική σας αλληλουχία από LC-MS/MS, επικολλήστε την εδώ για το ίδιο προφίλ.',
+    seqInLabel: 'Αλληλουχία αμινοξέων (κώδικας ενός γράμματος)',
+    presets: 'Έτοιμες αλληλουχίες', ssToggle: 'Οι κυστεΐνες ως γεφυρωμένες',
+    ssHint: '−2H ανά γέφυρα',
+    mLen: 'Μήκος', mAvg: 'Μέση μάζα', mMono: 'Μονοϊσοτοπική',
+    mChg: 'Καθαρό φορτίο · pH 7,4', mPI: 'Θεωρητικό pI', mHyd: 'Υδρόφοβο κλάσμα',
+    mAli: 'Δείκτης αλειφατικότητας', mGrv: 'GRAVY', mBom: 'Boman', mExt: 'ε₂₈₀',
+    uAA: 'αα', uDa: 'Da', uKcal: 'kcal/mol', uM1: 'M⁻¹cm⁻¹',
+    wheelH: 'Ελικοειδής τροχός', wheelSub: '100°/κατάλοιπο · βέλος = υδροφοβική ροπή',
+    wheelWin: 'Παράθυρο', wWhole: 'Όλη η αλληλουχία', wH1: 'Έλικα 1 (9–15)', wH2: 'Έλικα 2 (23–33)',
+    chargeH: 'Φορτίο ως προς pH', chargeSub: 'Σύνολο pKa κατά Bjellqvist',
+    axPH: 'pH', axCharge: 'καθαρό φορτίο',
+    calcNote: 'Οι τιμές pKa ακολουθούν το σύνολο Bjellqvist (ExPASy). Η υδροφοβικότητα και η ροπή υπολογίζονται με την κλίμακα Fauchère–Pliska και γωνία 100° μεταξύ διαδοχικών καταλοίπων. Ο δείκτης αλειφατικότητας κατά Ikai (1980), το GRAVY κατά Kyte–Doolittle και ο δείκτης Boman κατά Boman (2003). Το ProtParam υπολογίζει πάντοτε το pI και το καθαρό φορτίο για την ανηγμένη μορφή· γι’ αυτό οι τιμές συμπίπτουν ακριβώς με το πλαίσιο κενό, ενώ με το πλαίσιο επιλεγμένο αντιπροσωπεύουν τη φυσική μορφή με δισουλφιδικούς δεσμούς.',
+    badSeq: 'Οι μη αναγνωρίσιμοι χαρακτήρες αγνοήθηκαν',
+
+    s3kick: '03 — Εκλεκτικότητα μεμβράνης',
+    s3h: 'Γιατί βλάπτει τα βακτήρια και όχι εμάς;',
+    s3p: 'Η εξωτερική επιφάνεια της βακτηριακής μεμβράνης φέρει αρνητικό φορτίο (φωσφατιδυλογλυκερόλη, καρδιολιπίνη, LPS). Η εξωτερική επιφάνεια της μεμβράνης των κυττάρων θηλαστικών είναι ουδέτερη, δηλαδή αμφιτεριοντική (φωσφατιδυλοχολίνη). Ένα κατιονικό πεπτίδιο διαβάζει ηλεκτροστατικά αυτή τη διαφορά. Για την ορελίνη η διάκριση έχει δειχθεί πειραματικά: το πεπτίδιο προσδένεται σε αρνητικά φορτισμένα κυστίδια POPC/DOPG (3:1) αλλά όχι σε καθαρά κυστίδια POPC.',
+    schematic: 'Σχηματική κίνηση — όχι υπό κλίμακα',
+    memA: 'Βακτηριακή μεμβράνη', memAsub: 'ανιονική · POPG / καρδιολιπίνη / LPS',
+    memB: 'Μεμβράνη θηλαστικών', memBsub: 'αμφιτεριοντική · POPC / χοληστερόλη',
+    capA: 'Το κατιονικό πεπτίδιο έλκεται από τις αρνητικές κεφαλές, προσροφάται και εισχωρεί στη διπλοστιβάδα.',
+    capB: 'Δεν υπάρχει καθαρή ηλεκτροστατική έλξη· το πεπτίδιο προσπερνά χωρίς να προσδεθεί.',
+    memNote: 'Η κίνηση υπάρχει για να εξηγήσει τον μηχανισμό. Η πειραματική της βάση: η ορελίνη εμφανίζει μέτρια συγγένεια για κυστίδια POPC/DOPG (3:1) και δεν αλληλεπιδρά με καθαρά κυστίδια POPC (UniProt Q0MWV8· Shenkarev κ.ά., 2012).',
+    play: 'Αναπαραγωγή', pause: 'Παύση',
+
+    s4kick: '04 — Ροή μεθόδου',
+    s4h: 'Από τη μέδουσα στην αλληλουχία',
+    s4p: 'Τα πακέτα εργασίας του έργου αναλύονται σε επτά βήματα, καθένα από τα οποία παράγει την είσοδο του επόμενου. Κάντε κλικ σε ένα βήμα.',
+    st1: 'Εκχύλιση', st1s: 'Βλέννα και νηματοκύστες',
+    st1d: 'Η επιφανειακή βλέννα συλλέγεται με ήπια έκπλυση του κώδωνα με ψυχρό Tris-HCl. Οι νηματοκύστες που απομονώνονται από τα πλοκάμια εκκενώνονται με διαδοχικούς κύκλους ψύξης-απόψυξης και υπερήχους σε πάγο· το περιεχόμενο διαχωρίζεται από τα τοιχώματα με φυγοκέντρηση.',
+    st2: 'Διήθηση πηκτής', st2s: 'Sephadex G-50',
+    st2d: 'Διαχωρισμός κατά μοριακό βάρος. Τα μεγάλα μόρια δεν εισέρχονται στους πόρους και εγκαταλείπουν νωρίς τη στήλη· τα μικρά πεπτίδια καθυστερούν στους πόρους και εκλούονται αργά. Τα κλάσματα παρακολουθούνται στα 280 nm.',
+    st3: 'RP-HPLC', st3s: 'C18 · 5→65% ακετονιτρίλιο',
+    st3d: 'Διαχωρισμός υψηλής διακριτικής ικανότητας κατά πολικότητα. Τα υδρόφοβα πεπτίδια προσδένονται ισχυρότερα και εκλούονται στο τελευταίο τμήμα της βαθμίδωσης. Η ανίχνευση γίνεται στα 220 nm για τον πεπτιδικό δεσμό.',
+    st4: 'Έλεγχος καθαρότητας', st4s: 'Tricine SDS-PAGE',
+    st4d: 'Το σύστημα Laemmli διαχωρίζει ανεπαρκώς πεπτίδια χαμηλού μοριακού βάρους, γι’ αυτό χρησιμοποιείται πηκτή Tricine. Μία μόνο ζώνη μετά από χρώση αργύρου αποτελεί το κριτήριο ηλεκτροφορητικής καθαρότητας.',
+    st5: 'Δραστικότητα', st5s: 'MIC και MBC',
+    st5d: 'Σε σειρά διπλασιαζόμενων αραιώσεων, η χαμηλότερη συγκέντρωση χωρίς ορατή ανάπτυξη είναι η MIC. Ο δείκτης ρεσαζουρίνης επιβεβαιώνει τη βιωσιμότητα με χρώμα: μπλε σημαίνει καμία ανάπτυξη, ροζ σημαίνει ανάπτυξη. Για τη MBC, τα φρεάτια χωρίς ανάπτυξη επιστρώνονται σε άγαρ.',
+    st6: 'LC-MS/MS', st6s: 'Μάζα και αλληλουχία',
+    st6d: 'Η ακέραιη μάζα προκύπτει από αποσυνέλιξη της σειράς πολλαπλά φορτισμένων ιόντων. Αφού τα δισουλφίδια αναχθούν και αλκυλιωθούν και το δείγμα πεφθεί με θρυψίνη, η αλληλουχία διαβάζεται από τις σειρές ιόντων b και y των θραυσμάτων.',
+    st7: 'In silico', st7s: 'Μοντελοποίηση και πρόσδεση',
+    st7d: 'Μόλις γίνει γνωστή η αλληλουχία, η δομή μοντελοποιείται με AlphaFold και SWISS-MODEL και επικυρώνεται έναντι της δημοσιευμένης δομής 2LG4 της ορελίνης. Ακολουθούν οι ενέργειες πρόσδεσης έναντι βακτηριακών και θηλαστικών μοντέλων μεμβράνης.',
+    stepOf: 'Βήμα',
+
+    ftTitle: 'Πηγές και διαφάνεια',
+    ftBody: 'Η σελίδα αυτή δημιουργήθηκε για ερευνητικό έργο TÜBİTAK 2204-A. Η τρισδιάστατη δομή και οι σημειώσεις καταλοίπων είναι πραγματικά δεδομένα από δημόσιες βάσεις. Οι φυσικοχημικοί υπολογισμοί εκτελούνται στο πρόγραμμα περιήγησης με δημοσιευμένες κλίμακες και επαληθεύτηκαν έναντι του ExPASy ProtParam. Η κινούμενη απεικόνιση στην ενότητα εκλεκτικότητας είναι σχηματική: αποτελεί επεξήγηση μιας πειραματικής παρατήρησης και όχι έξοδο προσομοίωσης.',
+    ftSrc: 'Πηγές',
+    ftDisc: 'Το έργο βρίσκεται ακόμη σε φάση υλοποίησης· κανένα πειραματικό δεδομένο του ίδιου του έργου δεν εμφανίζεται σε αυτή τη σελίδα.'
+  }
+};
+
+/* ------------------------------------------------------- ortak yardımcılar */
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function fitCanvas(cv, cssH) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = cv.clientWidth || cv.parentElement.clientWidth || 600;
+  const h = cssH || cv.clientHeight || 300;
+  const nw = Math.round(w * dpr), nh = Math.round(h * dpr);
+  if (cv.width !== nw || cv.height !== nh) {
+    cv.width = nw; cv.height = nh; cv.style.height = h + 'px';
+  }
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w, h };
+}
+
+const cssVar = n => getComputedStyle(document.documentElement)
+  .getPropertyValue(n).trim();
+
+let THEME = {};
+function readTheme() {
+  const g = n => cssVar(n) || '#888';
+  THEME = {
+    cat: g('--cat'), ani: g('--ani'), hyd: g('--hyd'), pol: g('--pol'),
+    cys: g('--cys'), accent: g('--accent'), fg: g('--fg'), muted: g('--muted'),
+    faint: g('--faint'), line: g('--line'), surface: g('--surface'),
+    bg: g('--bg'), ok: g('--ok'),
+    stage: g('--stage'), stage2: g('--stage-2'), stageFg: g('--stage-fg'),
+    stageMuted: g('--stage-muted'), stageLine: g('--stage-line')
+  };
+  return THEME;
+}
+readTheme();
+
+const themeHooks = [];
+const onTheme = fn => { themeHooks.push(fn); };
+function fireTheme() { readTheme(); themeHooks.forEach(f => { try { f(); } catch (e) {} }); }
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fireTheme);
+
+/* renk yardımcıları (derinlik sisi ve saydamlık için) */
+function hex2rgb(h) {
+  h = (h || '').replace('#', '');
+  if (h.length === 3) h = h.split('').map(c => c + c).join('');
+  const n = parseInt(h || '888888', 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+function mix(a, b, t) {
+  const A = hex2rgb(a), B = hex2rgb(b);
+  return `rgb(${Math.round(A[0] + (B[0] - A[0]) * t)},${Math.round(A[1] + (B[1] - A[1]) * t)},${Math.round(A[2] + (B[2] - A[2]) * t)})`;
+}
+function rgba(h, a) { const c = hex2rgb(h); return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+
+/* sayı biçimi — yerele göre ayırıcı; yarım değerler ExPASy gibi
+   sıfırdan uzağa yuvarlanır (GRAVY −0,4575 → −0,458).                        */
+let LOC = 'tr';
+const LOCALES = { tr: 'tr-TR', en: 'en-US', el: 'el-GR' };
+function rnd(v, d) {
+  const f = Math.pow(10, d), x = v * f, a = Math.abs(x);
+  return Math.sign(x) * Math.round(a + a * Number.EPSILON * 8) / f;
+}
+const nf = (v, d = 2) => rnd(v, d).toLocaleString(LOCALES[LOC] || 'tr-TR',
+  { minimumFractionDigits: d, maximumFractionDigits: d }).replace(/^-/, '−');
+const nfSigned = (v, d = 2) =>
+  (rnd(v, d) > 0 ? '+' : rnd(v, d) < 0 ? '−' : '') + nf(Math.abs(v), d);
+
+/* ------------------------------------------- peptit kimyası (ProtParam uyumlu)
+   Ölçekler: ortalama/monoizotopik kalıntı kütleleri, Bjellqvist pKa seti,
+   Fauchère–Pliska hidrofobiklik, Kyte–Doolittle, Boman. Bu modülün çıktıları
+   aurelin için ExPASy ProtParam ile karşılaştırılarak doğrulanmıştır.          */
+const AAs = 'ACDEFGHIKLMNPQRSTVWY';
+const M_AVG = {A:71.0788,R:156.1875,N:114.1038,D:115.0886,C:103.1388,E:129.1155,
+  Q:128.1307,G:57.0519,H:137.1411,I:113.1594,L:113.1594,K:128.1741,M:131.1926,
+  F:147.1766,P:97.1167,S:87.0782,T:101.1051,W:186.2132,Y:163.1760,V:99.1326};
+const M_MONO = {A:71.03711,R:156.10111,N:114.04293,D:115.02694,C:103.00919,
+  E:129.04259,Q:128.05858,G:57.02146,H:137.05891,I:113.08406,L:113.08406,
+  K:128.09496,M:131.04049,F:147.06841,P:97.05276,S:87.03203,T:101.04768,
+  W:186.07931,Y:163.06333,V:99.06841};
+const H2O_A = 18.01528, H2O_M = 18.010565, H_A = 1.00794, H_M = 1.007825;
+
+const PK = {C:9.0, D:4.05, E:4.45, H:5.98, K:10.0, R:12.0, Y:10.0};
+const PK_NT = {A:7.59, M:7.00, S:6.93, P:8.36, T:6.82, V:7.44, E:7.70};
+const PK_CT = {D:4.55, E:4.75};
+
+const FP = {A:0.31,R:-1.01,N:-0.60,D:-0.77,C:1.54,Q:-0.22,E:-0.64,G:0.00,H:0.13,
+  I:1.80,L:1.70,K:-0.99,M:1.23,F:1.79,P:0.72,S:-0.04,T:0.26,W:2.25,Y:0.96,V:1.22};
+const KD = {A:1.8,R:-4.5,N:-3.5,D:-3.5,C:2.5,Q:-3.5,E:-3.5,G:-0.4,H:-3.2,I:4.5,
+  L:3.8,K:-3.9,M:1.9,F:2.8,P:-1.6,S:-0.8,T:-0.7,W:-0.9,Y:-1.3,V:4.2};
+const BOMAN = {L:4.92,I:4.92,V:4.04,F:2.98,M:2.35,W:2.33,A:1.81,C:1.28,G:0.94,
+  Y:-0.14,T:-2.57,S:-3.40,H:-4.66,Q:-5.54,K:-5.55,N:-6.64,E:-6.81,D:-8.72,
+  R:-14.92,P:0.0};
+
+const HYDRO_SET = 'ACFILMVW';          // hidrofobik oran tanımı
+const CLS = s => 'KRH'.includes(s) ? 'cat' : 'DE'.includes(s) ? 'ani'
+  : s === 'C' ? 'cys' : HYDRO_SET.includes(s) ? 'hyd' : 'pol';
+
+function cleanSeq(raw) {
+  const up = (raw || '').toUpperCase();
+  let seq = '', bad = 0;
+  for (const ch of up) {
+    if (AAs.includes(ch)) seq += ch;
+    else if (/[A-Z]/.test(ch)) bad++;
+  }
+  return { seq, bad };
+}
+
+function netCharge(seq, pH, freeCys) {
+  if (!seq.length) return 0;
+  const nt = PK_NT[seq[0]] ?? 7.5, ct = PK_CT[seq[seq.length - 1]] ?? 3.55;
+  let q = 1 / (1 + Math.pow(10, pH - nt)) - 1 / (1 + Math.pow(10, ct - pH));
+  for (const a of seq) {
+    if (a === 'K' || a === 'R' || a === 'H') q += 1 / (1 + Math.pow(10, pH - PK[a]));
+    else if (a === 'D' || a === 'E' || a === 'Y') q -= 1 / (1 + Math.pow(10, PK[a] - pH));
+    else if (a === 'C' && freeCys) q -= 1 / (1 + Math.pow(10, PK.C - pH));
+  }
+  return q;
+}
+
+function isoelectric(seq, freeCys) {
+  let lo = 0, hi = 14;
+  for (let i = 0; i < 100; i++) {
+    const mid = (lo + hi) / 2;
+    if (netCharge(seq, mid, freeCys) > 0) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+/* delta = ardışık kalıntılar arası açı (α-heliks için 100°) */
+function moment(seq, scale, delta = 100) {
+  if (!seq.length) return { H: 0, muH: 0, ang: 0 };
+  let s = 0, c = 0, sum = 0;
+  for (let i = 0; i < seq.length; i++) {
+    const v = scale[seq[i]], a = (delta * i) * Math.PI / 180;
+    s += v * Math.sin(a); c += v * Math.cos(a); sum += v;
+  }
+  return { H: sum / seq.length, muH: Math.hypot(s, c) / seq.length,
+           ang: Math.atan2(s, c) };
+}
+
+function profile(seq, bridged) {
+  const n = seq.length;
+  if (!n) return null;
+  const nCys = (seq.match(/C/g) || []).length;
+  const ss = bridged ? Math.floor(nCys / 2) : 0;
+  const freeCys = !bridged;
+  let avg = H2O_A - ss * 2 * H_A, mono = H2O_M - ss * 2 * H_M;
+  let hyd = 0, gravy = 0, boman = 0, nA = 0, nV = 0, nIL = 0, nW = 0, nY = 0;
+  for (const a of seq) {
+    avg += M_AVG[a]; mono += M_MONO[a];
+    if (HYDRO_SET.includes(a)) hyd++;
+    gravy += KD[a]; boman += BOMAN[a];
+    if (a === 'A') nA++; else if (a === 'V') nV++;
+    else if (a === 'I' || a === 'L') nIL++;
+    else if (a === 'W') nW++; else if (a === 'Y') nY++;
+  }
+  return {
+    n, seq, ss,
+    avg, mono,
+    charge: netCharge(seq, 7.4, freeCys),
+    pI: isoelectric(seq, freeCys),
+    hyd: hyd / n * 100,
+    ali: (nA + 2.9 * nV + 3.9 * nIL) / n * 100,
+    gravy: gravy / n,
+    boman: -boman / n,
+    ext: nW * 5500 + nY * 1490 + ss * 125,
+    fp: moment(seq, FP)
+  };
+}
+
+const PRESETS = {
+  aurelin:  'AACSDRAHGHICESFKSFCKDSGRNGVKLRANCKKTCGLC',
+  magainin: 'GIGKFLHSAKKFGKAFVGEIMNS',
+  melittin: 'GIGAVLKVLTTGLPALISWIKRKRQQ',
+  ll37:     'LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES'
+};
+
+/* ------------------------------------------- 2LG4 üç boyutlu görüntüleyici
+   Kendi yazdığım küçük bir oluşturucu: perspektif izdüşüm, ressam algoritması
+   (derinliğe göre sıralama) ve derinlik sisi. Koordinatlar gerçek PDB verisi. */
+const MolView = (() => {
+  const cv = document.getElementById('mol');
+  const M = AURELIN;
+  const N = M.seq.length;
+
+  /* ---- veri hazırlığı ---------------------------------------------------- */
+  const at = i => [M.xyz[i * 3], M.xyz[i * 3 + 1], M.xyz[i * 3 + 2]];
+  const caIdx = new Array(N + 1).fill(-1);
+  const sgIdx = {};
+  const byRes = {};
+  for (let i = 0; i < M.resi.length; i++) {
+    const r = M.resi[i];
+    (byRes[r] || (byRes[r] = [])).push(i);
+    if (M.names[i] === 'CA') caIdx[r] = i;
+    if (M.names[i] === 'SG') sgIdx[r] = i;
+  }
+  const inHelix = r => M.helix.some(h => r >= h[0] && r <= h[1]);
+  const ifaceAll = new Set([...M.iface_pos, ...M.iface_hyd]);
+
+  /* kovalent bağlar: ağır atomlar arası < 1,95 Å (S–S hariç, ayrı çizilir) */
+  const bonds = [];
+  for (let i = 0; i < M.resi.length; i++) {
+    for (let j = i + 1; j < M.resi.length; j++) {
+      if (Math.abs(M.resi[i] - M.resi[j]) > 1) continue;
+      const a = at(i), b = at(j);
+      const d2 = (a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2;
+      if (d2 < 1.95 * 1.95) bonds.push([i, j]);
+    }
+  }
+
+  /* CA omurgası üzerinden Catmull–Rom eğrisi (tüp gösterimi) */
+  const CAp = [];
+  for (let r = 1; r <= N; r++) CAp.push(at(caIdx[r]));
+  const SUB = 12, spline = [];
+  const crm = (p0, p1, p2, p3, t) => {
+    const t2 = t * t, t3 = t2 * t;
+    return [0, 1, 2].map(k => 0.5 * ((2 * p1[k]) + (-p0[k] + p2[k]) * t +
+      (2*p0[k] - 5*p1[k] + 4*p2[k] - p3[k]) * t2 +
+      (-p0[k] + 3*p1[k] - 3*p2[k] + p3[k]) * t3));
+  };
+  for (let i = 0; i < N - 1; i++) {
+    const p0 = CAp[Math.max(0, i - 1)], p1 = CAp[i],
+          p2 = CAp[i + 1], p3 = CAp[Math.min(N - 1, i + 2)];
+    for (let s = 0; s < SUB; s++)
+      spline.push({ p: crm(p0, p1, p2, p3, s / SUB), r: i + 1 + s / SUB });
+  }
+  spline.push({ p: CAp[N - 1], r: N });
+
+  /* ---- durum ------------------------------------------------------------ */
+  let rot = [1,0,0, 0,1,0, 0,0,1];
+  let zoom = 1, spin = !RM.matches, rep = 'tube', col = 'prop';
+  let showSS = true, showIf = true, sel = null, hoverR = null;
+  let W = 0, H = 0, ctx = null, scale = 1;
+
+  const mul = (A, B) => {
+    const C = new Array(9);
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++)
+      C[i*3+j] = A[i*3]*B[j] + A[i*3+1]*B[3+j] + A[i*3+2]*B[6+j];
+    return C;
+  };
+  const rotY = a => [Math.cos(a),0,Math.sin(a), 0,1,0, -Math.sin(a),0,Math.cos(a)];
+  const rotX = a => [1,0,0, 0,Math.cos(a),-Math.sin(a), 0,Math.sin(a),Math.cos(a)];
+  const apply = v => [
+    rot[0]*v[0] + rot[1]*v[1] + rot[2]*v[2],
+    rot[3]*v[0] + rot[4]*v[1] + rot[5]*v[2],
+    rot[6]*v[0] + rot[7]*v[1] + rot[8]*v[2]];
+
+  const FOC = 620;
+  function proj(v) {
+    const p = apply(v);
+    const z = p[2] * scale;
+    const k = FOC / Math.max(80, FOC - z);
+    return { x: W/2 + p[0]*scale*k, y: H/2 - p[1]*scale*k, z, k };
+  }
+
+  /* ---- renklendirme ----------------------------------------------------- */
+  function resColor(r) {
+    const s = M.seq[r - 1];
+    if (col === 'prop') return THEME[CLS(s)];
+    if (col === 'ss') return inHelix(r) ? THEME.accent : THEME.pol;
+    const t = (r - 1) / (N - 1);            // N→C gökkuşağı (mavi→kırmızı)
+    return `hsl(${(1 - t) * 255}, 62%, 56%)`;
+  }
+  const fog = (c, z) => {
+    const t = Math.min(0.72, Math.max(0, (18 - z / scale) / 44));
+    return mix(c, THEME.stage, t);
+  };
+
+  /* ---- çizim ------------------------------------------------------------ */
+  function draw() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    const g = ctx.createRadialGradient(W/2, H*0.42, 10, W/2, H*0.42, Math.max(W,H)*0.72);
+    g.addColorStop(0, THEME.stage2); g.addColorStop(1, THEME.stage);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+    const prim = [];
+
+    if (rep === 'ens') {
+      M.ens.forEach((m, mi) => {
+        for (let r = 0; r < N - 1; r++) {
+          const a = proj([m[r*3], m[r*3+1], m[r*3+2]]);
+          const b = proj([m[(r+1)*3], m[(r+1)*3+1], m[(r+1)*3+2]]);
+          prim.push({ z: (a.z + b.z) / 2, t: 'l', a, b,
+            w: (mi === 0 ? 3.4 : 1.1) * a.k,
+            c: mi === 0 ? resColor(r + 1) : THEME.stageMuted,
+            al: mi === 0 ? 1 : 0.3 });
+        }
+      });
+    } else if (rep === 'tube') {
+      for (let i = 0; i < spline.length - 1; i++) {
+        const a = proj(spline[i].p), b = proj(spline[i + 1].p);
+        const r = Math.round(spline[i].r);
+        prim.push({ z: (a.z + b.z) / 2, t: 'l', a, b,
+          w: (inHelix(r) ? 7.2 : 3.8) * a.k, c: resColor(r), al: 1 });
+      }
+    } else {                                   /* çubuk gösterimi */
+      for (const [i, j] of bonds) {
+        const a = proj(at(i)), b = proj(at(j));
+        const r = M.resi[i];
+        prim.push({ z: (a.z + b.z) / 2, t: 'l', a, b, w: 2.9 * a.k,
+          c: resColor(r), al: 1 });
+      }
+      for (let i = 0; i < M.resi.length; i++) {
+        const p = proj(at(i));
+        prim.push({ z: p.z, t: 'd', p, rr: 1.9 * p.k, c: resColor(M.resi[i]) });
+      }
+    }
+
+    /* disülfit köprüleri */
+    if (showSS && rep !== 'ens') {
+      for (const [x, y] of M.ss) {
+        const a = proj(at(sgIdx[x])), b = proj(at(sgIdx[y]));
+        prim.push({ z: (a.z + b.z) / 2 + 0.3, t: 'l', a, b, w: 5.6 * a.k,
+          c: THEME.cys, al: 1, dash: true });
+        prim.push({ z: a.z, t: 'd', p: a, rr: 3.1 * a.k, c: THEME.cys });
+        prim.push({ z: b.z, t: 'd', p: b, rr: 3.1 * b.k, c: THEME.cys });
+      }
+    }
+
+    /* misel bağlanma arayüzü (UniProt) */
+    if (showIf && rep !== 'ens') {
+      for (const r of ifaceAll) {
+        const p = proj(at(caIdx[r]));
+        prim.push({ z: p.z + 0.5, t: 'ring', p, rr: 7 * p.k,
+          c: M.iface_pos.includes(r) ? THEME.cat : THEME.hyd,
+          lab: M.seq[r - 1] + r });
+      }
+    }
+
+    if (sel) {
+      const p = proj(at(caIdx[sel]));
+      prim.push({ z: 1e6, t: 'sel', p, rr: 11 * p.k, c: THEME.stageFg,
+        lab: M.seq[sel - 1] + sel });
+    }
+
+    prim.sort((u, v) => u.z - v.z);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (const o of prim) {
+      if (o.t === 'l') {
+        ctx.globalAlpha = o.al ?? 1;
+        ctx.strokeStyle = fog(o.c, o.z); ctx.lineWidth = Math.max(0.6, o.w);
+        ctx.beginPath(); ctx.moveTo(o.a.x, o.a.y); ctx.lineTo(o.b.x, o.b.y); ctx.stroke();
+        ctx.globalAlpha = 1;
+      } else if (o.t === 'd') {
+        ctx.fillStyle = fog(o.c, o.z);
+        ctx.beginPath(); ctx.arc(o.p.x, o.p.y, Math.max(0.5, o.rr), 0, 6.2832); ctx.fill();
+      } else if (o.t === 'ring') {
+        ctx.strokeStyle = fog(o.c, o.z); ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.arc(o.p.x, o.p.y, o.rr, 0, 6.2832); ctx.stroke();
+        ctx.fillStyle = fog(o.c, o.z);
+        ctx.font = '500 10px ui-monospace, monospace';
+        ctx.fillText(o.lab, o.p.x + o.rr + 3, o.p.y + 3.5);
+      } else if (o.t === 'sel') {
+        ctx.strokeStyle = o.c; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(o.p.x, o.p.y, o.rr, 0, 6.2832); ctx.stroke();
+        ctx.fillStyle = o.c; ctx.font = '600 12px ui-monospace, monospace';
+        ctx.fillText(o.lab, o.p.x + o.rr + 5, o.p.y + 4);
+      }
+    }
+  }
+
+  /* ---- etkileşim -------------------------------------------------------- */
+  function resize() {
+    const r = fitCanvas(cv, cv.parentElement.clientWidth < 520 ? 340 : 460);
+    ctx = r.ctx; W = r.w; H = r.h;
+    scale = Math.min(W, H) * 0.44 / M.radius * zoom;
+    draw();
+  }
+  function hit(mx, my) {
+    let best = null, bd = 16 * 16;
+    for (let r = 1; r <= N; r++) {
+      const p = proj(at(caIdx[r]));
+      const d = (p.x - mx) ** 2 + (p.y - my) ** 2;
+      if (d < bd) { bd = d; best = r; }
+    }
+    return best;
+  }
+  let drag = null, moved = 0;
+  cv.addEventListener('pointerdown', e => {
+    cv.setPointerCapture(e.pointerId);
+    drag = { x: e.offsetX, y: e.offsetY }; moved = 0;
+  });
+  cv.addEventListener('pointermove', e => {
+    if (drag) {
+      const dx = e.offsetX - drag.x, dy = e.offsetY - drag.y;
+      moved += Math.abs(dx) + Math.abs(dy);
+      rot = mul(mul(rotY(dx * 0.008), rotX(dy * 0.008)), rot);
+      drag = { x: e.offsetX, y: e.offsetY };
+      draw();
+    } else {
+      const h = hit(e.offsetX, e.offsetY);
+      if (h !== hoverR) { hoverR = h; cv.style.cursor = h ? 'pointer' : 'grab'; }
+    }
+  });
+  cv.addEventListener('pointerup', e => {
+    if (drag && moved < 5) {
+      const h = hit(e.offsetX, e.offsetY);
+      if (h) API.select(h);
+    }
+    drag = null;
+  });
+  cv.addEventListener('pointercancel', () => { drag = null; });
+  cv.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoom = Math.min(3, Math.max(0.5, zoom * (e.deltaY > 0 ? 0.9 : 1.1)));
+    scale = Math.min(W, H) * 0.44 / M.radius * zoom;
+    draw();
+  }, { passive: false });
+
+  let last = 0;
+  function loop(t) {
+    if (spin && !drag && ctx) {
+      if (t - last > 16) { rot = mul(rotY(0.0042), rot); draw(); last = t; }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize', resize);
+  onTheme(() => draw());
+
+  const API = {
+    resize, draw,
+    set(k, v) {
+      if (k === 'rep') rep = v; else if (k === 'col') col = v;
+      else if (k === 'ss') showSS = v; else if (k === 'if') showIf = v;
+      else if (k === 'spin') spin = v;
+      draw();
+    },
+    reset() {
+      rot = [1,0,0, 0,1,0, 0,0,1]; zoom = 1;
+      scale = Math.min(W, H) * 0.44 / M.radius; draw();
+    },
+    select(r) { sel = r; draw(); if (API.onSelect) API.onSelect(r); },
+    get selected() { return sel; },
+    inHelix, ifacePos: M.iface_pos, ifaceHyd: M.iface_hyd,
+    ssPartner(r) { for (const [a, b] of M.ss) { if (a === r) return b; if (b === r) return a; } return null; }
+  };
+  return API;
+})();
+
+/* --------------------------------------- helisel tekerlek ve yük eğrisi */
+const Charts = (() => {
+  const wcv = document.getElementById('wheel');
+  const ccv = document.getElementById('curve');
+  let cur = { seq: PRESETS.aurelin, win: 'all', bridged: true };
+
+  const windowed = () => {
+    if (cur.win === 'h1') return { s: cur.seq.slice(8, 15), off: 9 };
+    if (cur.win === 'h2') return { s: cur.seq.slice(22, 33), off: 23 };
+    return { s: cur.seq, off: 1 };
+  };
+
+  function wheel() {
+    const { ctx, w, h } = fitCanvas(wcv, 330);
+    ctx.clearRect(0, 0, w, h);
+    const { s, off } = windowed();
+    if (!s.length) return;
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.33;
+    const ang = i => (100 * i - 90) * Math.PI / 180;
+    const px = i => cx + R * Math.cos(ang(i)), py = i => cy + R * Math.sin(ang(i));
+
+    ctx.strokeStyle = THEME.line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
+
+    ctx.strokeStyle = rgba(THEME.muted, 0.45); ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    for (let i = 0; i < s.length; i++) (i ? ctx.lineTo : ctx.moveTo).call(ctx, px(i), py(i));
+    ctx.stroke();
+
+    const m = moment(s, FP);
+    if (m.muH > 0.01) {
+      const a = m.ang - Math.PI / 2, L = R * 0.82 * Math.min(1, m.muH / 0.7);
+      const ex = cx + L * Math.cos(a), ey = cy + L * Math.sin(a);
+      ctx.strokeStyle = THEME.accent; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey); ctx.stroke();
+      ctx.fillStyle = THEME.accent; ctx.beginPath();
+      ctx.moveTo(ex + 7 * Math.cos(a), ey + 7 * Math.sin(a));
+      ctx.lineTo(ex + 6 * Math.cos(a + 2.5), ey + 6 * Math.sin(a + 2.5));
+      ctx.lineTo(ex + 6 * Math.cos(a - 2.5), ey + 6 * Math.sin(a - 2.5));
+      ctx.closePath(); ctx.fill();
+    }
+
+    for (let i = 0; i < s.length; i++) {
+      const x = px(i), y = py(i), rr = Math.max(8.5, 13 - s.length * 0.06);
+      ctx.fillStyle = THEME[CLS(s[i])];
+      ctx.beginPath(); ctx.arc(x, y, rr, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = `600 ${Math.round(rr * 0.95)}px ui-monospace, monospace`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(s[i], x, y + 0.5);
+      if (s.length <= 24) {
+        ctx.fillStyle = THEME.faint; ctx.font = '400 9px ui-monospace, monospace';
+        ctx.fillText(String(off + i), cx + (R + 15) * Math.cos(ang(i)),
+                     cy + (R + 15) * Math.sin(ang(i)));
+      }
+    }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = THEME.fg; ctx.font = '500 13px ui-monospace, monospace';
+    ctx.fillText('µH ' + nf(m.muH, 3), cx, cy - 8);
+    ctx.fillStyle = THEME.faint; ctx.font = '400 10px ui-monospace, monospace';
+    ctx.fillText('〈H〉 ' + nf(m.H, 3), cx, cy + 8);
+    ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+  }
+
+  function curve() {
+    const { ctx, w, h } = fitCanvas(ccv, 330);
+    ctx.clearRect(0, 0, w, h);
+    const seq = cur.seq;
+    if (!seq.length) return;
+    const free = !cur.bridged;
+    const L = 42, R = 12, T = 16, B = 30;
+    const pw = w - L - R, ph = h - T - B;
+    let lo = 0, hi = 0;
+    const pts = [];
+    for (let i = 0; i <= 140; i++) {
+      const pH = i / 10, q = netCharge(seq, pH, free);
+      pts.push([pH, q]); lo = Math.min(lo, q); hi = Math.max(hi, q);
+    }
+    lo = Math.floor(lo - 1); hi = Math.ceil(hi + 1);
+    const X = pH => L + pw * pH / 14, Y = q => T + ph * (hi - q) / (hi - lo);
+
+    ctx.strokeStyle = THEME.line; ctx.lineWidth = 1;
+    ctx.fillStyle = THEME.faint; ctx.font = '400 10px ui-monospace, monospace';
+    for (let q = lo; q <= hi; q += Math.max(1, Math.round((hi - lo) / 6))) {
+      ctx.globalAlpha = q === 0 ? 1 : 0.5;
+      ctx.beginPath(); ctx.moveTo(L, Y(q)); ctx.lineTo(L + pw, Y(q)); ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.textAlign = 'right'; ctx.fillText(String(q), L - 6, Y(q) + 3.5);
+    }
+    ctx.textAlign = 'center';
+    for (let pH = 0; pH <= 14; pH += 2) ctx.fillText(String(pH), X(pH), h - 10);
+
+    const pI = isoelectric(seq, free);
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = rgba(THEME.muted, 0.7);
+    ctx.beginPath(); ctx.moveTo(X(7.4), T); ctx.lineTo(X(7.4), T + ph); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = THEME.accent; ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    pts.forEach(([pH, q], i) => (i ? ctx.lineTo : ctx.moveTo).call(ctx, X(pH), Y(q)));
+    ctx.stroke();
+
+    const q74 = netCharge(seq, 7.4, free);
+    ctx.fillStyle = THEME.accent;
+    ctx.beginPath(); ctx.arc(X(7.4), Y(q74), 4, 0, 6.2832); ctx.fill();
+    ctx.fillStyle = THEME.ok;
+    ctx.beginPath(); ctx.arc(X(pI), Y(0), 4, 0, 6.2832); ctx.fill();
+
+    ctx.font = '500 10.5px ui-monospace, monospace'; ctx.textAlign = 'left';
+    ctx.fillStyle = THEME.accent;
+    ctx.fillText('pH 7,4 → ' + nfSigned(q74, 2), X(7.4) + 7, Y(q74) - 7);
+    ctx.fillStyle = THEME.ok;
+    ctx.fillText('pI ' + nf(pI, 2), X(pI) + 7, Y(0) + 14);
+    ctx.fillStyle = THEME.faint; ctx.font = '400 10px ui-monospace, monospace';
+    ctx.textAlign = 'center'; ctx.fillText(T_('axPH'), L + pw / 2, h - 10);
+    ctx.save(); ctx.translate(11, T + ph / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillText(T_('axCharge'), 0, 0); ctx.restore();
+    ctx.textAlign = 'start';
+  }
+
+  function redraw() { wheel(); curve(); }
+  onTheme(redraw);
+  window.addEventListener('resize', redraw);
+  return {
+    update(o) { Object.assign(cur, o); redraw(); },
+    redraw
+  };
+})();
+
+/* ------------------------------------------------ dizi şeridi ve ölçümler */
+function buildSeqStrip() {
+  const box = document.getElementById('seqStrip');
+  box.innerHTML = '';
+  const seq = AURELIN.seq;
+  for (let r = 1; r <= seq.length; r++) {
+    const b = document.createElement('button');
+    b.className = 'aa'; b.type = 'button';
+    b.style.background = `var(--${CLS(seq[r - 1])})`;
+    b.setAttribute('aria-pressed', 'false');
+    b.dataset.r = r;
+    b.innerHTML = seq[r - 1] + (r % 5 === 0 ? `<i>${r}</i>` : '');
+    b.addEventListener('click', () => MolView.select(r));
+    box.appendChild(b);
+  }
+}
+
+function markSeqStrip(r) {
+  document.querySelectorAll('#seqStrip .aa').forEach(b =>
+    b.setAttribute('aria-pressed', String(+b.dataset.r === r)));
+}
+
+function renderMetrics(p) {
+  const box = document.getElementById('metrics');
+  if (!p) { box.innerHTML = ''; return; }
+  const rows = [
+    ['mLen', String(p.n), T_('uAA')],
+    ['mAvg', nf(p.avg, 2), T_('uDa')],
+    ['mMono', nf(p.mono, 2), T_('uDa')],
+    ['mChg', nfSigned(p.charge, 2), ''],
+    ['mPI', nf(p.pI, 2), ''],
+    ['mHyd', '%' + nf(p.hyd, 1), ''],
+    ['mAli', nf(p.ali, 2), ''],
+    ['mGrv', nfSigned(p.gravy, 3), ''],
+    ['mBom', nf(p.boman, 2), T_('uKcal')],
+    ['mExt', String(p.ext), T_('uM1')]
+  ];
+  box.innerHTML = rows.map(([k, v, u]) =>
+    `<div class="met"><span>${T_(k)}</span><b>${v}${u ? `<u>${u}</u>` : ''}</b></div>`
+  ).join('');
+}
+
+/* ------------------------------------------------ membran seçiciliği (şematik) */
+const Membrane = (() => {
+  const defs = [
+    { cv: document.getElementById('memA'), anionic: true },
+    { cv: document.getElementById('memB'), anionic: false }
+  ];
+  let running = !RM.matches, t0 = performance.now(), acc = 0;
+
+  function peptides(anionic) {
+    const out = [];
+    for (let i = 0; i < 5; i++) out.push({
+      x: -0.2 - i * 0.26, y: 0.12 + (i % 3) * 0.12, v: 0.055 + (i % 4) * 0.011,
+      phase: i * 1.7, stuck: 0
+    });
+    return out;
+  }
+  const state = defs.map(d => peptides(d.anionic));
+
+  function bilayer(ctx, w, h, anionic, t, peps) {
+    const my = h * 0.62, hr = 6.4, sp = 15;
+    const pore = anionic ? Math.max(0, Math.min(1, (t - 5.2) / 2.2)) : 0;
+    const poreX = w * 0.54, poreW = 30 * pore;
+
+    for (let x = sp / 2; x < w; x += sp) {
+      const d = Math.abs(x - poreX);
+      const push = pore > 0 && d < poreW + 22 ? (1 - d / (poreW + 22)) * poreW * 0.5 : 0;
+      const sx = x + (x < poreX ? -push : push);
+      const wob = Math.sin(t * 1.6 + x * 0.06) * 1.1;
+      for (const s of [-1, 1]) {
+        const hy = my + s * (hr + 13) + wob * s;
+        ctx.strokeStyle = rgba(THEME.stageMuted, 0.5); ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(sx, hy); ctx.lineTo(sx - 2, hy - s * 12);
+        ctx.moveTo(sx, hy); ctx.lineTo(sx + 2, hy - s * 12); ctx.stroke();
+        ctx.fillStyle = anionic ? rgba(THEME.ani, 0.85) : rgba(THEME.pol, 0.85);
+        ctx.beginPath(); ctx.arc(sx, hy, hr, 0, 6.2832); ctx.fill();
+        if (s === -1) {
+          ctx.fillStyle = THEME.stage;
+          ctx.font = '700 8px ui-monospace, monospace';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(anionic ? '−' : '±', sx, hy + 0.5);
+          ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+        }
+      }
+    }
+
+    if (pore > 0.25) {                       /* hücre içeriğinin sızması */
+      for (let i = 0; i < 9; i++) {
+        const p = ((t * 0.35 + i * 0.31) % 1);
+        ctx.fillStyle = rgba(THEME.cat, (1 - p) * 0.75);
+        ctx.beginPath();
+        ctx.arc(poreX + Math.sin(i * 2.3) * 9, my - p * (h * 0.4), 2.4, 0, 6.2832);
+        ctx.fill();
+      }
+    }
+
+    const surf = my - 20;
+    for (const p of peps) {
+      p.x += p.v * 0.016 * 60 / 60;
+      if (anionic) {
+        const gx = p.x * w;
+        if (gx > w * 0.3 && p.stuck < 1) p.stuck = Math.min(1, p.stuck + 0.006);
+        if (p.x > 1.25) { p.x = -0.25; p.stuck = 0; }
+      } else if (p.x > 1.25) p.x = -0.25;
+      const x = p.x * w;
+      const yFree = h * p.y + Math.sin(t * 2 + p.phase) * 6;
+      const y = anionic ? yFree + (surf + 6 - yFree) * p.stuck
+                        : yFree + Math.sin(t * 1.2 + p.phase) * 10;
+      if (x < -20 || x > w + 20) continue;
+      ctx.save(); ctx.translate(x, y);
+      ctx.rotate(Math.sin(t + p.phase) * 0.25);
+      const g = ctx.createLinearGradient(-11, 0, 11, 0);
+      g.addColorStop(0, THEME.cat); g.addColorStop(1, THEME.accent);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(-11, -6, 22, 12, 6);
+      else ctx.arc(0, 0, 8, 0, 6.2832);
+      ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '700 9px ui-monospace, monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('+++', 0, 0.5);
+      ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+      ctx.restore();
+      if (anionic && p.stuck > 0.15 && p.stuck < 0.98) {
+        ctx.strokeStyle = rgba(THEME.cat, 0.35 * (1 - p.stuck)); ctx.lineWidth = 1;
+        ctx.setLineDash([2, 3]);
+        ctx.beginPath(); ctx.moveTo(x, y + 8); ctx.lineTo(x, surf + 16); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+  }
+
+  function frame(now) {
+    if (running) acc += Math.min(0.05, (now - t0) / 1000);
+    t0 = now;
+    defs.forEach((d, i) => {
+      const r = fitCanvas(d.cv, 300);
+      const { ctx, w, h } = r;
+      ctx.fillStyle = THEME.stage; ctx.fillRect(0, 0, w, h);
+      const g = ctx.createLinearGradient(0, 0, 0, h);
+      g.addColorStop(0, THEME.stage2); g.addColorStop(1, THEME.stage);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      bilayer(ctx, w, h, d.anionic, acc % 9, state[i]);
+      ctx.fillStyle = THEME.stageMuted;
+      ctx.font = '400 10px ui-monospace, monospace';
+      ctx.fillText(d.anionic ? '− − −  POPG / LPS' : '± ± ±  POPC', 12, h - 12);
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  return { toggle() { running = !running; return running; }, get running() { return running; } };
+})();
+
+/* --------------------------------------------------- yöntem akışı sahneleri */
+const Flow = (() => {
+  const cv = document.getElementById('flow');
+  let step = 0, t = 0, last = performance.now();
+  const lab = (ctx, x, y, s, c) => {
+    ctx.fillStyle = c || THEME.stageMuted;
+    ctx.font = '400 10px ui-monospace, monospace'; ctx.fillText(s, x, y);
+  };
+
+  const S = [
+    /* 1 — ekstraksiyon */
+    (ctx, w, h) => {
+      const cx = w * 0.3, cy = h * 0.33, R = Math.min(w, h) * 0.2;
+      ctx.strokeStyle = rgba(THEME.accent, .85); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, R, Math.PI, 0); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.quadraticCurveTo(cx, cy + R * .5, cx + R, cy); ctx.stroke();
+      for (let i = 0; i < 5; i++) {
+        const a = cx - R * .7 + i * R * .35;
+        ctx.strokeStyle = rgba(THEME.accent, .5);
+        ctx.beginPath(); ctx.moveTo(a, cy + R * .3);
+        ctx.quadraticCurveTo(a + Math.sin(t * 2 + i) * 9, cy + R, a + Math.sin(t * 2 + i) * 5, cy + R * 1.6);
+        ctx.stroke();
+      }
+      for (let i = 0; i < 7; i++) {
+        const p = (t * .32 + i * .143) % 1;
+        ctx.fillStyle = rgba(THEME.cat, .8 * (1 - p * .5));
+        ctx.beginPath();
+        ctx.arc(cx + Math.sin(i * 2) * R * .6, cy + R * 1.6 + p * h * .38, 3.1, 0, 6.2832);
+        ctx.fill();
+      }
+      const tx = w * .72, ty = h * .3, tw = 34, th = h * .46;
+      ctx.strokeStyle = THEME.stageLine; ctx.lineWidth = 2;
+      ctx.strokeRect(tx, ty, tw, th);
+      ctx.fillStyle = rgba(THEME.cat, .32);
+      const fill = Math.min(th - 8, (t % 6) / 6 * (th - 8));
+      ctx.fillRect(tx + 2, ty + th - 2 - fill, tw - 4, fill);
+      lab(ctx, tx - 4, ty - 10, 'Tris-HCl +4 °C');
+      lab(ctx, w * .06, h - 16, 'mukus → santrifüj → 0,45 µm → −80 °C');
+    },
+    /* 2 — jel filtrasyon */
+    (ctx, w, h) => {
+      const cx = w * .5, top = h * .12, bot = h * .82, cw = 92;
+      ctx.strokeStyle = THEME.stageLine; ctx.lineWidth = 2;
+      ctx.strokeRect(cx - cw / 2, top, cw, bot - top);
+      for (let i = 0; i < 46; i++) {
+        const bx = cx - cw / 2 + 9 + (i * 37 % (cw - 18));
+        const by = top + 12 + (i * 53 % (bot - top - 24));
+        ctx.fillStyle = rgba(THEME.stageMuted, .22);
+        ctx.beginPath(); ctx.arc(bx, by, 7, 0, 6.2832); ctx.fill();
+      }
+      const run = (t % 7) / 7;
+      for (let i = 0; i < 5; i++) {            /* büyük = hızlı */
+        const p = Math.min(1, run * 1.5 - i * .02);
+        if (p < 0) continue;
+        ctx.fillStyle = THEME.ani;
+        ctx.beginPath();
+        ctx.arc(cx - 22 + i * 11, top + 10 + p * (bot - top - 16), 5.6, 0, 6.2832); ctx.fill();
+      }
+      for (let i = 0; i < 6; i++) {            /* küçük = yavaş */
+        const p = Math.min(1, run * .72 - i * .015);
+        if (p < 0) continue;
+        ctx.fillStyle = THEME.cat;
+        ctx.beginPath();
+        ctx.arc(cx - 26 + i * 10, top + 10 + p * (bot - top - 16), 3, 0, 6.2832); ctx.fill();
+      }
+      lab(ctx, cx + cw / 2 + 12, top + 24, 'büyük → erken');
+      lab(ctx, cx + cw / 2 + 12, top + 42, 'küçük → geç');
+      lab(ctx, cx - cw / 2, bot + 20, 'Sephadex G-50  ·  1,5–30 kDa');
+    },
+    /* 3 — RP-HPLC */
+    (ctx, w, h) => {
+      const L = 40, R = 16, T = 20, B = 36, pw = w - L - R, ph = h - T - B;
+      ctx.strokeStyle = THEME.stageLine; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = rgba(THEME.hyd, .55);
+      ctx.beginPath(); ctx.moveTo(L, T + ph * .92); ctx.lineTo(L + pw, T + ph * .2); ctx.stroke();
+      ctx.setLineDash([]);
+      const peaks = [[.18, .28], [.34, .46], [.52, 1], [.68, .34], [.83, .22]];
+      const prog = Math.min(1, (t % 8) / 6);
+      ctx.strokeStyle = THEME.accent; ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= pw; i++) {
+        const x = i / pw; if (x > prog) break;
+        let y = 0;
+        for (const [c, a] of peaks) y += a * Math.exp(-((x - c) ** 2) / (2 * .013 ** 2));
+        (i ? ctx.lineTo : ctx.moveTo).call(ctx, L + i, T + ph - y * ph * .82);
+      }
+      ctx.stroke();
+      if (prog > .58) {
+        const x = L + pw * .52;
+        ctx.strokeStyle = rgba(THEME.cat, .8); ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(x, T + ph * .1); ctx.lineTo(x, T + ph); ctx.stroke();
+        ctx.setLineDash([]);
+        lab(ctx, x + 6, T + ph * .14, 'aktif pik', THEME.cat);
+      }
+      lab(ctx, L, h - 14, 'C18  ·  %5→65 asetonitril  ·  220 nm');
+      ctx.save(); ctx.translate(14, T + ph / 2); ctx.rotate(-Math.PI / 2);
+      lab(ctx, -18, 0, 'A₂₂₀'); ctx.restore();
+    },
+    /* 4 — Tricine SDS-PAGE */
+    (ctx, w, h) => {
+      const gx = w * .28, gw = w * .44, top = h * .12, bot = h * .86;
+      ctx.fillStyle = rgba(THEME.stageMuted, .08); ctx.fillRect(gx, top, gw, bot - top);
+      ctx.strokeStyle = THEME.stageLine; ctx.strokeRect(gx, top, gw, bot - top);
+      const run = Math.min(1, (t % 8) / 5.5);
+      const mk = [[40, .16], [25, .3], [15, .45], [10, .58], [4.6, .76], [1.7, .9]];
+      for (const [kd, pos] of mk) {
+        const y = top + pos * (bot - top) * run + 8;
+        ctx.fillStyle = rgba(THEME.stageMuted, .55);
+        ctx.fillRect(gx + 8, y, gw * .22, 3.4);
+        lab(ctx, gx - 34, y + 4, kd + '');
+      }
+      const y = top + .78 * (bot - top) * run + 8;
+      ctx.fillStyle = THEME.cys; ctx.fillRect(gx + gw * .42, y - 1, gw * .24, 5.4);
+      ctx.fillStyle = rgba(THEME.cys, .25); ctx.fillRect(gx + gw * .42, y - 4, gw * .24, 11);
+      lab(ctx, gx + gw + 10, y + 4, '≈ 4,3 kDa', THEME.cys);
+      lab(ctx, gx - 34, top - 8, 'kDa');
+      lab(ctx, gx, bot + 20, '%16 Tricine SDS-PAGE  ·  gümüş boyama  ·  tek bant = saf');
+    },
+    /* 5 — MIC / MBC */
+    (ctx, w, h) => {
+      const n = 11, pad = 26, cw = Math.min(40, (w - pad * 2) / n);
+      const x0 = (w - cw * n) / 2, y = h * .38, r = cw * .38;
+      const micIdx = 5, reveal = (t % 8) / 3.2;
+      for (let i = 0; i < n; i++) {
+        const cx = x0 + cw * i + cw / 2;
+        const shown = reveal > i / n * 1.4;
+        const grow = i > micIdx;
+        ctx.fillStyle = shown ? (grow ? rgba(THEME.ani, .8) : rgba(THEME.cat, .75))
+                              : rgba(THEME.stageMuted, .18);
+        ctx.beginPath(); ctx.arc(cx, y, r, 0, 6.2832); ctx.fill();
+        ctx.strokeStyle = THEME.stageLine; ctx.lineWidth = 1.4; ctx.stroke();
+        ctx.save(); ctx.translate(cx, y + r + 10); ctx.rotate(-Math.PI / 3.4);
+        lab(ctx, 0, 0, String(512 / Math.pow(2, i)).replace('.', ','));
+        ctx.restore();
+      }
+      const mx = x0 + cw * micIdx + cw / 2;
+      if (reveal > .9) {
+        ctx.strokeStyle = THEME.stageFg; ctx.lineWidth = 1.6; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(mx + cw / 2, y - r - 16); ctx.lineTo(mx + cw / 2, y + r + 4); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = THEME.stageFg; ctx.font = '500 11px ui-monospace, monospace';
+        ctx.fillText('MIC = 16 µg/mL', mx - 24, y - r - 22);
+      }
+      lab(ctx, x0, h - 14, 'mavi: üreme yok (rezazurin)   ·   pembe: üreme var');
+      lab(ctx, x0, y - r - 40, 'iki katlı seri seyreltme  ·  µg/mL');
+    },
+    /* 6 — LC-MS/MS */
+    (ctx, w, h) => {
+      const L = 36, R = 14, T = 18, B = 34, pw = w - L - R, ph = (h - T - B) * .52;
+      ctx.strokeStyle = THEME.stageLine;
+      ctx.beginPath(); ctx.moveTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+      const zs = [[7, 614.85, .45], [6, 717.16, .72], [5, 860.39, 1], [4, 1075.24, .8], [3, 1433.31, .4]];
+      const ph2 = (t % 9);
+      zs.forEach(([z, mz, a], i) => {
+        if (ph2 < i * .35) return;
+        const x = L + (mz - 500) / 1100 * pw;
+        ctx.strokeStyle = THEME.accent; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x, T + ph); ctx.lineTo(x, T + ph - a * ph * .84); ctx.stroke();
+        lab(ctx, x - 12, T + ph - a * ph * .84 - 6, z + '+', THEME.accent);
+      });
+      lab(ctx, L, T + ph + 16, 'm/z  ·  çoklu yüklü iyon serisi (ESI)');
+      if (ph2 > 2.6) {
+        const y2 = T + ph + 52;
+        ctx.strokeStyle = rgba(THEME.stageMuted, .6);
+        ctx.beginPath(); ctx.moveTo(L, y2 + 42); ctx.lineTo(L + pw, y2 + 42); ctx.stroke();
+        const x = L + pw * .52;
+        ctx.strokeStyle = THEME.cys; ctx.lineWidth = 2.6;
+        ctx.beginPath(); ctx.moveTo(x, y2 + 42); ctx.lineTo(x, y2 + 4); ctx.stroke();
+        ctx.fillStyle = THEME.cys; ctx.font = '500 11px ui-monospace, monospace';
+        ctx.fillText('4296,92 Da', x + 8, y2 + 14);
+        lab(ctx, L, y2 + 58, 'dekonvolüsyon → intakt kütle');
+      }
+      if (ph2 > 5) {
+        const sx = L, sy = h - 14;
+        ctx.font = '500 11px ui-monospace, monospace';
+        const frag = 'AACSDR';
+        for (let i = 0; i < frag.length; i++) {
+          ctx.fillStyle = i < (ph2 - 5) * 3 ? THEME.stageFg : rgba(THEME.stageMuted, .3);
+          ctx.fillText(frag[i], sx + 150 + i * 13, sy);
+        }
+        lab(ctx, sx, sy, 'b / y iyonları → dizi');
+      }
+    },
+    /* 7 — in-siliko */
+    (ctx, w, h) => {
+      const cx = w * .26, cy = h * .46, R = Math.min(w, h) * .21;
+      ctx.strokeStyle = rgba(THEME.accent, .9); ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      for (let i = 0; i <= 70; i++) {
+        const a = i / 70 * Math.PI * 4 + t * .5;
+        const x = cx + Math.cos(a) * R * .62, y = cy - R + (i / 70) * R * 2;
+        (i ? ctx.lineTo : ctx.moveTo).call(ctx, x, y);
+      }
+      ctx.stroke();
+      lab(ctx, cx - R, cy + R + 24, 'AlphaFold / SWISS-MODEL');
+      lab(ctx, cx - R, cy + R + 40, '2LG4 ile RMSD karşılaştırması');
+
+      const bx = w * .56, bw = w * .34, by = h * .3;
+      const bars = [['POPG / LPS', -7.0, -9.5, THEME.cat], ['POPC / kol.', -4.0, -6.5, THEME.pol]];
+      bars.forEach(([name, a, b, c], i) => {
+        const y = by + i * 62;
+        const sc = v => bx + (Math.abs(v) / 11) * bw;
+        const grow = Math.min(1, Math.max(0, (t % 7) - .4 - i * .5));
+        ctx.fillStyle = rgba(c, .32);
+        ctx.fillRect(bx, y, (sc(a) - bx) * grow, 18);
+        ctx.fillStyle = c;
+        ctx.fillRect(bx + (sc(a) - bx) * grow - 3, y, 3, 18);
+        ctx.strokeStyle = c; ctx.lineWidth = 1.4;
+        ctx.strokeRect(bx, y, (sc(b) - bx) * grow, 18);
+        lab(ctx, bx, y - 6, name, THEME.stageFg);
+        lab(ctx, bx, y + 32, nf(a, 1) + ' … ' + nf(b, 1) + ' kcal/mol', c);
+      });
+      ctx.fillStyle = rgba(THEME.hyd, .9);
+      ctx.font = '500 10px ui-monospace, monospace';
+      ctx.fillText('ÖNGÖRÜ — hesaplanmış veri değil', bx, h - 14);
+    }
+  ];
+
+  function frame(now) {
+    t += Math.min(.05, (now - last) / 1000); last = now;
+    const { ctx, w, h } = fitCanvas(cv, w0() < 560 ? 280 : 330);
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, THEME.stage2); g.addColorStop(1, THEME.stage);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+    S[step](ctx, w, h);
+    requestAnimationFrame(frame);
+  }
+  const w0 = () => cv.parentElement.clientWidth || 600;
+  requestAnimationFrame(frame);
+  return { go(i) { step = i; t = 0; } };
+})();
+
+/* --------------------------------------------------------- dil ve bağlantı */
+let LANG = 'tr';
+function T_(k) { return (I18N[LANG] && I18N[LANG][k]) ?? I18N.tr[k] ?? k; }
+
+/* üstteki sayılar doğrudan PDB/UniProt verisinden türetilir */
+const AP = profile(AURELIN.seq, true);
+function fillFacts() {
+  const v = {
+    fv1: String(AP.n),
+    fv2: nf(AP.avg, 2) + ' <u>Da</u>',
+    fv3: String(AURELIN.ss.length),
+    fv4: String(AURELIN.helix.length),
+    fv5: String(AURELIN.nModels),
+    fv6: nfSigned(AP.charge, 2)
+  };
+  for (const k in v) document.getElementById(k).innerHTML = v[k];
+}
+
+function applyI18n() {
+  document.documentElement.lang = LANG;
+  LOC = LANG;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.innerHTML = T_(el.dataset.i18n);
+  });
+  fillFacts();
+  document.querySelectorAll('.langs button').forEach(b =>
+    b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)));
+  buildSteps();
+  showStep(curStep);
+  renderReadout(MolView.selected);
+  recalc();
+  document.getElementById('memToggle').textContent =
+    Membrane.running ? T_('pause') : T_('play');
+}
+
+/* ------------------------------------------------------------- görüntüleyici */
+function segWire(id, fn) {
+  const box = document.getElementById(id);
+  box.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...box.querySelectorAll('button')].forEach(x =>
+      x.setAttribute('aria-pressed', String(x === b)));
+    fn(b.dataset.v ?? b.dataset.p ?? b.dataset.w);
+  });
+}
+segWire('repSeg', v => MolView.set('rep', v));
+segWire('colSeg', v => MolView.set('col', v));
+['tgSS:ss', 'tgIf:if', 'tgSpin:spin'].forEach(pair => {
+  const [id, key] = pair.split(':');
+  document.getElementById(id).addEventListener('change', e =>
+    MolView.set(key, e.target.checked));
+});
+document.getElementById('btnReset').addEventListener('click', () => MolView.reset());
+if (RM.matches) document.getElementById('tgSpin').checked = false;
+
+function renderReadout(r) {
+  const box = document.getElementById('readout');
+  if (!r) { box.innerHTML = `<p class="empty">${T_('rdEmpty')}</p>`; return; }
+  const s = AURELIN.seq[r - 1];
+  const clsName = { cat: 'legCat', ani: 'legAni', hyd: 'legHyd', pol: 'legPol', cys: 'legCys' }[CLS(s)];
+  const notes = [];
+  const part = MolView.ssPartner(r);
+  if (part) notes.push(`${T_('noteSS')} — Cys${r}–Cys${part}`);
+  if (MolView.inHelix(r)) notes.push(T_('noteHelix'));
+  if (MolView.ifacePos.includes(r)) notes.push(T_('notePos'));
+  if (MolView.ifaceHyd.includes(r)) notes.push(T_('noteHyd'));
+  box.innerHTML =
+    `<dl style="margin:0">
+      <div class="rrow"><dt>${T_('rdRes')}</dt><dd class="mono"><b>${s}</b> ${AA3L[s] || ''}</dd></div>
+      <div class="rrow"><dt>${T_('rdPos')}</dt><dd class="mono">${r} / 40</dd></div>
+      <div class="rrow"><dt>${T_('rdClass')}</dt><dd>${T_(clsName)}</dd></div>
+      ${notes.length ? `<div class="rrow"><dt>${T_('rdNote')}</dt><dd>${notes.join('<br>')}</dd></div>` : ''}
+    </dl>`;
+}
+const AA3L = { A:'Ala', R:'Arg', N:'Asn', D:'Asp', C:'Cys', E:'Glu', Q:'Gln',
+  G:'Gly', H:'His', I:'Ile', L:'Leu', K:'Lys', M:'Met', F:'Phe', P:'Pro',
+  S:'Ser', T:'Thr', W:'Trp', Y:'Tyr', V:'Val' };
+MolView.onSelect = r => { markSeqStrip(r); renderReadout(r); };
+
+/* ------------------------------------------------------------- hesaplayıcı */
+const seqIn = document.getElementById('seqIn');
+const bridge = document.getElementById('tgBridge');
+function recalc() {
+  const { seq, bad } = cleanSeq(seqIn.value);
+  const warn = document.getElementById('seqWarn');
+  warn.hidden = !bad; warn.textContent = bad ? T_('badSeq') + ' (' + bad + ')' : '';
+  const p = profile(seq, bridge.checked);
+  renderMetrics(p);
+  Charts.update({ seq, bridged: bridge.checked });
+}
+seqIn.addEventListener('input', recalc);
+bridge.addEventListener('change', recalc);
+segWire('preSeg', p => { seqIn.value = PRESETS[p]; recalc(); });
+segWire('winSeg', w => Charts.update({ win: w }));
+
+/* ------------------------------------------------------------ yöntem akışı */
+let curStep = 0;
+function buildSteps() {
+  const box = document.getElementById('steps');
+  box.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const b = document.createElement('button');
+    b.className = 'step'; b.type = 'button';
+    b.setAttribute('aria-pressed', String(i - 1 === curStep));
+    b.innerHTML = `<span class="stepno">${String(i).padStart(2, '0')}</span>
+      <b>${T_('st' + i)}</b><span>${T_('st' + i + 's')}</span>`;
+    b.addEventListener('click', () => showStep(i - 1));
+    box.appendChild(b);
+  }
+}
+function showStep(i) {
+  curStep = i;
+  document.querySelectorAll('#steps .step').forEach((b, k) =>
+    b.setAttribute('aria-pressed', String(k === i)));
+  document.getElementById('stepMeta').textContent =
+    `${T_('stepOf')} ${String(i + 1).padStart(2, '0')} / 07 · ${T_('st' + (i + 1) + 's')}`;
+  document.getElementById('stepTitle').textContent = T_('st' + (i + 1));
+  document.getElementById('stepDesc').textContent = T_('st' + (i + 1) + 'd');
+  Flow.go(i);
+}
+
+/* --------------------------------------------------------------- seçicilik */
+document.getElementById('memToggle').addEventListener('click', e => {
+  e.target.textContent = Membrane.toggle() ? T_('pause') : T_('play');
+});
+
+/* ------------------------------------------------------------------ açılış */
+document.querySelectorAll('.langs button').forEach(b =>
+  b.addEventListener('click', () => {
+    LANG = b.dataset.lang;
+    applyI18n();
+    Charts.redraw();
+    try { localStorage.setItem('aurelin.lang', LANG); } catch (e) {}
+  }));
+
+try {
+  const saved = localStorage.getItem('aurelin.lang');
+  if (saved && I18N[saved]) LANG = saved;
+} catch (e) {}
+
+seqIn.value = PRESETS.aurelin;
+buildSeqStrip();
+applyI18n();
+MolView.resize();
+MolView.select(15);          /* Phe15 — misel bağlanma arayüzünde */
+Charts.redraw();
+
+</script>
+</body>
+</html>

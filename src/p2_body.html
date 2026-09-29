@@ -1,0 +1,196 @@
+<header class="top">
+  <div class="wrap topin">
+    <div class="brand"><b>Aurelin</b><span data-i18n="eyebrow"></span></div>
+    <nav class="sec">
+      <a href="#yapi" data-i18n="nav1"></a><a href="#profil" data-i18n="nav2"></a>
+      <a href="#secicilik" data-i18n="nav3"></a><a href="#yontem" data-i18n="nav4"></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <button data-lang="tr" aria-pressed="true">TR</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="el" aria-pressed="false">EL</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <p class="kick" data-i18n="eyebrow"></p>
+  <h1 data-i18n="title"></h1>
+  <p class="lede" data-i18n="lede"></p>
+  <div class="facts">
+    <div class="fact"><b id="fv1"></b><span data-i18n="f1l"></span></div>
+    <div class="fact"><b id="fv2"></b><span data-i18n="f2l"></span></div>
+    <div class="fact"><b id="fv3"></b><span data-i18n="f3l"></span></div>
+    <div class="fact"><b id="fv4"></b><span data-i18n="f4l"></span></div>
+    <div class="fact"><b id="fv5"></b><span data-i18n="f5l"></span></div>
+    <div class="fact"><b id="fv6"></b><span data-i18n="f6l"></span></div>
+  </div>
+</div>
+
+<!-- ============================================================== 1. YAPI -->
+<section id="yapi"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s1kick"></p>
+    <h2 data-i18n="s1h"></h2>
+    <p data-i18n="s1p"></p>
+  </div>
+
+  <div class="grid v">
+    <div class="stage" id="molStage">
+      <span class="tag">PDB 2LG4 · NMR</span>
+      <canvas id="mol" height="460"></canvas>
+      <div class="stagebar"><span data-i18n="viewHint"></span></div>
+    </div>
+
+    <div class="panel">
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="g" data-i18n="lblRep"></label>
+        <div class="seg" id="repSeg">
+          <button data-v="tube" aria-pressed="true" data-i18n="repTube"></button>
+          <button data-v="stick" aria-pressed="false" data-i18n="repStick"></button>
+          <button data-v="ens" aria-pressed="false" data-i18n="repEns"></button>
+        </div>
+      </div>
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="g" data-i18n="lblCol"></label>
+        <div class="seg" id="colSeg">
+          <button data-v="prop" aria-pressed="true" data-i18n="colProp"></button>
+          <button data-v="ss" aria-pressed="false" data-i18n="colSS"></button>
+          <button data-v="rain" aria-pressed="false" data-i18n="colRain"></button>
+        </div>
+      </div>
+      <div class="ctl" style="margin-bottom:14px">
+        <label class="chk"><input type="checkbox" id="tgSS" checked><span data-i18n="tgSS"></span></label>
+        <label class="chk"><input type="checkbox" id="tgIf" checked><span data-i18n="tgIf"></span></label>
+        <label class="chk"><input type="checkbox" id="tgSpin" checked><span data-i18n="tgSpin"></span></label>
+        <button class="btn" id="btnReset" data-i18n="reset"></button>
+      </div>
+
+      <h3 data-i18n="seqLabel" style="margin-top:16px"></h3>
+      <div class="seqstrip" id="seqStrip"></div>
+      <div class="legend">
+        <span><b style="background:var(--cat)"></b><span data-i18n="legCat"></span></span>
+        <span><b style="background:var(--ani)"></b><span data-i18n="legAni"></span></span>
+        <span><b style="background:var(--hyd)"></b><span data-i18n="legHyd"></span></span>
+        <span><b style="background:var(--pol)"></b><span data-i18n="legPol"></span></span>
+        <span><b style="background:var(--cys)"></b><span data-i18n="legCys"></span></span>
+      </div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </div>
+  <p class="hint" data-i18n="prov"></p>
+</div></section>
+
+<!-- ============================================================ 2. PROFİL -->
+<section id="profil"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s2kick"></p>
+    <h2 data-i18n="s2h"></h2>
+    <p data-i18n="s2p"></p>
+  </div>
+
+  <div class="panel" style="margin-top:26px">
+    <h3 data-i18n="seqInLabel"></h3>
+    <textarea class="seqin mono" id="seqIn" spellcheck="false" autocapitalize="characters"></textarea>
+    <div class="ctl" style="margin-top:12px">
+      <label class="g" data-i18n="presets"></label>
+      <div class="seg" id="preSeg">
+        <button data-p="aurelin" aria-pressed="true">Aurelin</button>
+        <button data-p="magainin" aria-pressed="false">Magainin 2</button>
+        <button data-p="melittin" aria-pressed="false">Melittin</button>
+        <button data-p="ll37" aria-pressed="false">LL-37</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="tgBridge" checked>
+        <span data-i18n="ssToggle"></span></label>
+      <span class="mono" style="font-size:11px;color:var(--faint)" data-i18n="ssHint"></span>
+    </div>
+    <p class="warn" id="seqWarn" hidden></p>
+    <div class="metrics" id="metrics"></div>
+  </div>
+
+  <div class="grid h">
+    <div class="panel">
+      <h3 data-i18n="wheelH"></h3>
+      <p class="psub" data-i18n="wheelSub"></p>
+      <div class="ctl" style="margin-bottom:12px">
+        <label class="g" data-i18n="wheelWin"></label>
+        <div class="seg" id="winSeg">
+          <button data-w="all" aria-pressed="true" data-i18n="wWhole"></button>
+          <button data-w="h1" aria-pressed="false" data-i18n="wH1"></button>
+          <button data-w="h2" aria-pressed="false" data-i18n="wH2"></button>
+        </div>
+      </div>
+      <canvas id="wheel" height="330"></canvas>
+    </div>
+    <div class="panel">
+      <h3 data-i18n="chargeH"></h3>
+      <p class="psub" data-i18n="chargeSub"></p>
+      <canvas id="curve" height="330"></canvas>
+    </div>
+  </div>
+  <p class="hint" data-i18n="calcNote"></p>
+</div></section>
+
+<!-- ========================================================= 3. SEÇİCİLİK -->
+<section id="secicilik"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s3kick"></p>
+    <h2 data-i18n="s3h"></h2>
+    <p data-i18n="s3p"></p>
+  </div>
+
+  <div class="ctl" style="margin-top:22px">
+    <button class="btn" id="memToggle" data-i18n="pause"></button>
+    <span class="mono" style="font-size:11px;color:var(--faint)" data-i18n="schematic"></span>
+  </div>
+
+  <div class="memgrid">
+    <div>
+      <div class="memhd"><b data-i18n="memA"></b><span data-i18n="memAsub"></span></div>
+      <div class="stage"><canvas id="memA" height="300"></canvas></div>
+      <p class="memcap" data-i18n="capA"></p>
+    </div>
+    <div>
+      <div class="memhd"><b data-i18n="memB"></b><span data-i18n="memBsub"></span></div>
+      <div class="stage"><canvas id="memB" height="300"></canvas></div>
+      <p class="memcap" data-i18n="capB"></p>
+    </div>
+  </div>
+  <p class="hint" data-i18n="memNote"></p>
+</div></section>
+
+<!-- ============================================================ 4. YÖNTEM -->
+<section id="yontem"><div class="wrap">
+  <div class="shead">
+    <p class="kick" data-i18n="s4kick"></p>
+    <h2 data-i18n="s4h"></h2>
+    <p data-i18n="s4p"></p>
+  </div>
+
+  <div class="steps" id="steps" role="group"></div>
+
+  <div class="stagewrap">
+    <div class="stage"><canvas id="flow" height="330"></canvas></div>
+    <div class="panel stepbody">
+      <p class="stepmeta" id="stepMeta"></p>
+      <h3 id="stepTitle"></h3>
+      <p id="stepDesc"></p>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <h3 data-i18n="ftTitle"></h3>
+  <p data-i18n="ftBody"></p>
+  <h3 data-i18n="ftSrc"></h3>
+  <ol>
+    <li>Shenkarev, Z. O., Panteleev, P. V., Balandin, S. V., Gizatullina, A. K., Altukhov, D. A., Finkina, E. I., Kokryakov, V. N., Arseniev, A. S., &amp; Ovchinnikova, T. V. (2012). Recombinant expression and solution structure of antimicrobial peptide aurelin from jellyfish <em>Aurelia aurita</em>. <em>Biochemical and Biophysical Research Communications, 429</em>(1–2), 63–69. <a href="https://doi.org/10.1016/j.bbrc.2012.10.092" target="_blank" rel="noopener">doi:10.1016/j.bbrc.2012.10.092</a> — PDB <a href="https://www.rcsb.org/structure/2LG4" target="_blank" rel="noopener">2LG4</a></li>
+    <li>Ovchinnikova, T. V., Balandin, S. V., Aleshina, G. M., Tagaev, A. A., Leonova, Y. F., Krasnodembsky, E. D., Men'shenin, A. V., &amp; Kokryakov, V. N. (2006). Aurelin, a novel antimicrobial peptide from jellyfish <em>Aurelia aurita</em> with structural features of defensins and channel-blocking toxins. <em>Biochemical and Biophysical Research Communications, 348</em>(2), 514–523. <a href="https://doi.org/10.1016/j.bbrc.2006.07.078" target="_blank" rel="noopener">doi:10.1016/j.bbrc.2006.07.078</a></li>
+    <li>UniProt Consortium. Aurelin — <a href="https://www.uniprot.org/uniprotkb/Q0MWV8/entry" target="_blank" rel="noopener">Q0MWV8</a> (Swiss-Prot, reviewed).</li>
+    <li>Gasteiger, E., Hoogland, C., Gattiker, A., Duvaud, S., Wilkins, M. R., Appel, R. D., &amp; Bairoch, A. (2005). Protein identification and analysis tools on the ExPASy server. In <em>The Proteomics Protocols Handbook</em> (pp. 571–607). Humana Press.</li>
+    <li>Fauchère, J.-L., &amp; Pliška, V. (1983). Hydrophobic parameters π of amino-acid side chains. <em>European Journal of Medicinal Chemistry, 18</em>, 369–375. · Eisenberg, D., Weiss, R. M., &amp; Terwilliger, T. C. (1982). The helical hydrophobic moment. <em>Nature, 299</em>, 371–374.</li>
+    <li>Bjellqvist, B., Hughes, G. J., Pasquali, C., Paquet, N., Ravier, F., Sanchez, J.-C., Frutiger, S., &amp; Hochstrasser, D. (1993). The focusing positions of polypeptides in immobilized pH gradients. <em>Electrophoresis, 14</em>(1), 1023–1031.</li>
+    <li>Kyte, J., &amp; Doolittle, R. F. (1982). A simple method for displaying the hydropathic character of a protein. <em>Journal of Molecular Biology, 157</em>(1), 105–132. · Ikai, A. (1980). Thermostability and aliphatic index of globular proteins. <em>Journal of Biochemistry, 88</em>(6), 1895–1898. · Boman, H. G. (2003). Antibacterial peptides: basic facts and emerging concepts. <em>Journal of Internal Medicine, 254</em>(3), 197–215.</li>
+  </ol>
+  <p class="disc" data-i18n="ftDisc"></p>
+</div></footer>

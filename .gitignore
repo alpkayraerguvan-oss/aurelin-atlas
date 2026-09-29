@@ -1,0 +1,7 @@
+_bundle.js
+_diag*.html
+_phone.html
+site/
+__pycache__/
+*.pyc
+shot_*.png
