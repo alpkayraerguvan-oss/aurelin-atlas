@@ -6,3 +6,4 @@ __pycache__/
 *.pyc
 shot_*.png
 _site/
+.netlify/
